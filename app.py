@@ -25,5 +25,13 @@ TOKEN_KEY= "mytoken"
 def home():
     return render_template("index.html")
 
+@app.route("/hospitals", methods=["GET"])
+def hospitals():
+    return render_template("hospital.html")
+
+@app.route("/hospital1", methods=["GET"])
+def hospital1():
+    return render_template("hospitals-item.html")
+
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
