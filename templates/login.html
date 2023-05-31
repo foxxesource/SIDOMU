@@ -1,47 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Halaman Registrasi</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page | SIDOMU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
 </head>
-    
+
 <body>
     <header class="p-3" style="background-color: #0d47a1;">
-    <div class="card mb-3 shadow-sm mx-auto mt-5 " style="max-width: 400px;">
-        <div class="card-body">
-            <div style="text-align:center">
-            <h2><b>Login for medical</b></h2>
-            <p>Connect with the best local pros</p>
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
+                        <image width="35" xlink:href="static/img/logo.png"></image>
+                    </svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
+                    <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/hospitals" class="nav-link px-2 text-white">Hospitals</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Doctors</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Blog</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Contact</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <div class="text-end">
+                    <a href ="/login"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
+                    <a href ="/register"><button  type="button" class="btn btn-warning">Sign-up</button></a>
+                </div>
+            </div>
         </div>
-        <br>
-                        <form action="/submit" method="post">
-                          <div class="form-group">
-                          
-                            <div class="form-group">
-                                <label for="email">E-Mail Address <span class="bintang" style="color: red;">*</span></label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Enter E-Mail">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Password <span class="bintang" style="color: red;">*</span></label>
-                                <input type="password" class="form-control" id="pw" name="pw" placeholder="Enter your Password">
-                            </div>
-                            
-                            
-                            <div class="d-flex justify-content-center">
-                            <!-- <a href="/" class="btn btn-secondary mr-2">Batalkan</a> -->
-                            <button type="submit" class="btn btn-primary mr-2" style="width: 400px;"><b>LOGIN</b></button>
+    </header>
+
+    <div style="margin-bottom: 121px; background-color: #0d47a1;">
+        <!-- Login -->
+        <div class="container px-5 py-5 login">
+            <!-- Login -->
+            <div>
+                <div class="m-auto bg-white shadow-sm p-5 rounded-3 text-center col-lg-5 mx-auto">
+                    <h3 class="fw-bold text-black mb-2">Log in to <span class="fw-bold text-warning">SIDOMU</span></h3>
+                    <p class="text-muted fw-light">Connect with the best professionals</p>
+                    <form action="index.html" class="text-start pt-4">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">E-Mail Address <small
+                                    class="text-danger">*</small></label>
+                            <input type="email" class="form-control" placeholder="name@example.com">
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <p class="login-register-text">Don't have an account? <a href="register">Sign-up Here</a>.</p>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Password <small
+                                    class="text-danger">*</small></label>
+                            <input type="password" class="form-control" placeholder="Enter Password">
                         </div>
-                        </form>
+                        <button type="button"
+                            class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Sign
+                            In</button>
+                        <p class="text-muted mb-0 mt-3 text-center">Don’t have an account? <a href="/register" class="text-mdinfo">Sign
+                                Up</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-dark py-4 mt-auto copyright-footer">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright © <span class="fw-bold text-warning">SIDOMU</span> 2023
                     </div>
-
-
-                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-                
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="/">Home</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/hospitals">Hospitals</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">Doctors</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">Blog</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">Contact</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">About</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
-</header>
+
 </html>
