@@ -9,31 +9,52 @@
 <body>
     <header class="p-3" style="background-color: #0d47a1;">
     <div class="card mb-3 shadow-sm mx-auto mt-5 " style="max-width: 400px;">
+    
+        <img class="x 
+        img" src="https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/C6QZ-pcv3Bd.png" 
+        alt="" width="24" height="25" id="silang">
+
         <div class="card-body">
             <div style="text-align:center">
-            <h2><b>Login for medical</b></h2>
+            <h2><b>Sing up for medical</b></h2>
             <p>Connect with the best local pros</p>
         </div>
         <br>
                         <form action="/submit" method="post">
                           <div class="form-group">
-                          
+                          <table>
+                            <tr>
+                                <td><label for="firstname">Fisrt name <span class="bintang" style="color: red;">*</span></label></td>
+                                <td><label for="lastname">Last name</label></td>
+                                
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter Fisrt Name"></td>
+                                <td><input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Last Name"></td>
+                            </tr>
+                            </table>
+                          </div>
+
                             <div class="form-group">
                                 <label for="email">E-Mail Address <span class="bintang" style="color: red;">*</span></label>
                                 <input type="text" class="form-control" id="email" name="email" placeholder="Enter E-Mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Mobile Number <span class="bintang" style="color: red;">*</span></label>
+                                <input type="text" class="form-control" id="nohp" name="nohp" placeholder="Enter Mobile Number">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">Password <span class="bintang" style="color: red;">*</span></label>
                                 <input type="password" class="form-control" id="pw" name="pw" placeholder="Enter your Password">
                             </div>
                             
-                            
                             <div class="d-flex justify-content-center">
                             <!-- <a href="/" class="btn btn-secondary mr-2">Batalkan</a> -->
-                            <button type="submit" class="btn btn-primary mr-2" style="width: 400px;"><b>LOGIN</b></button>
+                            <button type="submit" class="btn btn-primary mr-2" style="width: 400px;"><b>SING UP</b></button>
+                            <br>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <p class="login-register-text">Don't have an account? <a href="register">Sign-up Here</a>.</p>
+                            <p class="login-register-text">Have an account? <a href="login">Login Here</a>.</p>
                         </div>
                         </form>
                     </div>
