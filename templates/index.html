@@ -15,16 +15,8 @@
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
     <style>
-        .btn-square-md {
-            width: 120px !important;
-            max-width: 100% !important;
-            max-height: 100% !important;
-            height: 50px !important;
-            text-align: center;
-            padding: 0px;
-            font-size: 15px;
-        }
     </style>
     <script>
 
@@ -47,8 +39,7 @@
                     <li><a href="/hospitals" class="nav-link px-2 text-white">Hospitals</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">Doctors</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">Blog</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Contact</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                    <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
                 </ul>
 
                 <div class="text-end">
@@ -354,9 +345,7 @@
                     <span class="text-white mx-1">·</span>
                     <a class="link-light small" href="#">Blog</a>
                     <span class="text-white mx-1">·</span>
-                    <a class="link-light small" href="#">Contact</a>
-                    <span class="text-white mx-1">·</span>
-                    <a class="link-light small" href="#">About</a>
+                    <a class="link-light small" href="/about">About</a>
                 </div>
             </div>
         </div>
