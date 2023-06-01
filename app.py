@@ -49,5 +49,21 @@ def login_doctor():
 def about():
     return render_template("about.html")
 
+@app.route("/doctor")
+def doctor():
+    return render_template("doctor.html")
+
+@app.route("/doctor-item")
+def doctor_item():
+    return render_template("doctors-item.html")
+
+@app.route("/blog")
+def blog():
+    return render_template("blog.html")
+
+@app.route("/blog-post")
+def blog_post():
+    return render_template("blog-post.html")
+
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

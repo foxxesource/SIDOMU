@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <style>
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <header class="p-3" style="background-color: #0d47a1;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
+                        <image width="35" xlink:href="static/img/logo.png"></image>
+                    </svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
+                    <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/hospitals" class="nav-link px-2 text-white">Hospitals</a></li>
+                    <li><a href="/doctor" class="nav-link px-2 text-white">Doctors</a></li>
+                    <li><a href="/blog" class="nav-link px-2 text-white">Blog</a></li>
+                    <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                <div class="text-end">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        Login
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title col-9 fs-5" id="staticBackdropLabel">Choose your login
+                                        methods</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body text-center mt-2 mb-2">
+                                    <a href="/login"><button type="button" class="btn btn-primary btn-square-md"><i
+                                                class="bi bi-person"></i> Patient</button></a>
+                                    <a href="/login/doctor"><button type="button"
+                                            class="btn btn-warning btn-square-md"><i class="bi bi-person-vcard"></i>
+                                            Doctor</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/register"><button type="button" class="btn btn-warning">Sign-up</button></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <header class="py-5 inner-header" style="background-color: #0d47a1;">
+        <div class="container py-4 px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1 class="fw-bold text-white">Doctor Profile</h1>
+                        <p class="fw-normal text-white-50 mb-0"><a class="text-white" href="/doctor">Doctors</a> <i
+                                class="bi-arrow-right"></i> Doctor Profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="py-5">
+        <div class="container px-5 my-5">
+            <div class="row gx-5">
+                <div class="col-lg-4">
+                    <div class="sidebar-fixed">
+                        <div class="position-relative mb-5">
+                            <div class="shadow-sm overflow-hidden rounded-3 mb-3" style="background-color: #0d47a1;">
+                                <img class="card-img-top" src="static/img/d-profile.jpg">
+                                <div class="p-4">
+                                    <div>
+                                        <h5 class="fw-bold mb-1 text-white">Bintang Duinata</h5>
+                                        <p class="mb-0 text-white-50">Gynecology, Health Care &amp; Obstetrics</p>
+                                    </div>
+                                </div>
+                                <div class="p-4 border-top border-50">
+                                    <div class="d-flex gap-3 pb-1 text-white">
+                                        <i class="bi bi-telephone m-0"></i>
+                                        <div>
+                                            <p class="mb-1 text-white">(+62) 896 3964 0252</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3 pb-1 text-white">
+                                        <i class="bi bi-envelope m-0"></i>
+                                        <div>
+                                            <p class="mb-1 text-white">bintang@gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3 pb-0 text-white">
+                                        <i class="bi bi-geo-alt m-0"></i>
+                                        <div>
+                                            <p class="mb-1 text-white">Graha Raya, Tangerang, Jakarta</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="d-flex align-items-center justify-content-between border-top border-50 py-4 px-5">
+                                    <a class="px-2 text-white" href="#!"><i class="bi-twitter"></i></a>
+                                    <a class="px-2 text-white" href="#!"><i class="bi-facebook"></i></a>
+                                    <a class="px-2 text-white" href="#!"><i class="bi-linkedin"></i></a>
+                                    <a class="px-2 text-white" href="#!"><i class="bi-youtube"></i></a>
+                                </div>
+                            </div>
+                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                class="btn btn-warning fw-bold fs-7 shadow-sm rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Get
+                                Appointment</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <h2 class="mb-1 fw-bold" style="color: #0d47a1;">Dr. Bintang Duinata</h2>
+                    <p class="lead mb-3">Rumah Sakit Premiere – Jakarta</p>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                        fugiat nulla pariatur excepteur sint occaecat cupidatat non proident. </p>
+                    <p class="mb-4">
+                        It is a long established fact that a reader will be distracted by the readable content of a page
+                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                        distribution of letters, as opposed to using 'Content here, content here', making it look like
+                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
+                        their default model text.
+                    </p>
+                    <h3 class="mb-3 h5">Education</h3>
+                    <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
+                        <table class="table table-borderless m-0">
+                            <thead>
+                                <tr>
+                                    <th class="col-3">Year</th>
+                                    <th class="col-3">Degree</th>
+                                    <th>Institute</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-muted">2006</td>
+                                    <td class="text-muted">MBBS, M.D</td>
+                                    <td class="text-muted">University of London</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">2010</td>
+                                    <td class="text-muted">M.D. of Medicine</td>
+                                    <td class="text-muted">Australia Medical College</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3 class="mb-3 mt-4 h5">Experienced</h3>
+                    <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
+                        <table class="table table-borderless m-0">
+                            <thead>
+                                <tr>
+                                    <th class="col-3">Year</th>
+                                    <th class="col-3">Department</th>
+                                    <th>Position</th>
+                                    <th>Hospital</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-muted">2007 - 2008</td>
+                                    <td class="text-muted">MBBS, M.D</td>
+                                    <td class="text-muted">Senior Prof.</td>
+                                    <td class="text-muted">ProHealth Medical Clinic</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">2010 - 2018</td>
+                                    <td class="text-muted">M.D. of Medicine</td>
+                                    <td class="text-muted">Associate Prof.</td>
+                                    <td class="text-muted">Australia Medical College</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-dark py-4 mt-auto copyright-footer">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright © <span class="fw-bold text-warning">SIDOMU</span> 2023
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="/">Home</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/hospitals">Hospitals</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/doctor">Doctors</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/blog">Blog</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/about">About</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>

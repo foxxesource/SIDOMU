@@ -7,3 +7,16 @@
     padding: 0px;
     font-size: 15px;
 }
+
+.bg-featured-blog {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 15rem;
+}
+
+body {
+    font-family: system-ui;
+}
