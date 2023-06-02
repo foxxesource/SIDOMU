@@ -109,7 +109,29 @@
                                 class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Sign
                                 Up</button>
                             <p class="text-muted mb-0 mt-3 text-center">Already have an account? <a href="/login"
-                                    class="text-mdinfo">Sign In</a></p>
+                                    class="text-mdinfo" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">Sign In</a></p>
+                                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title col-9 fs-5" id="staticBackdropLabel">Choose your login
+                                        methods</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body text-center mt-2 mb-2">
+                                    <a href="/login"><button type="button" class="btn btn-primary btn-square-md"><i
+                                                class="bi bi-person"></i> Patient</button></a>
+                                    <a href="/login/doctor"><button type="button"
+                                            class="btn btn-warning btn-square-md"><i class="bi bi-person-vcard"></i>
+                                            Doctor</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                         </form>
                     </div>
                 </div>
