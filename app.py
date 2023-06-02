@@ -11,6 +11,9 @@ app = Flask(__name__)
 dotenv_path = join(dirname(__file__), ".env")
 load_dotenv(dotenv_path)
 
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["UPLOAD_FOLDER"] = "./static/profile_pics"
+
 MONGODB_URL = os.environ.get("MONGODB_URL")
 DB_NAME = os.environ.get("DB_NAME")
 
@@ -64,6 +67,37 @@ def blog():
 @app.route("/blog-post")
 def blog_post():
     return render_template("blog-post.html")
+
+# Halaman Pasien
+@app.route("/home-patient", methods=["GET"])
+def home_patient():
+    return render_template("home-patient.html")
+
+#halaman janji temu / appointment
+@app.route("/appointment", methods=["GET"])
+def appointment():
+    return render_template("appointment.html")
+
+# Halaman Edit User Pasien
+@app.route("/patient/<email>", methods=["GET"])
+def user(email):
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        status= email == payload.get("id")
+        patient_info = db.patient.find_one(
+            {"email" : email},
+            {"_id" : False}
+            )
+        return render_template("user-patient.html", 
+                        patient_info=patient_info,
+                        status=status)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
