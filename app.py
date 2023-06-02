@@ -41,7 +41,7 @@ def register():
 def login():
     return render_template("login.html")
     
-@app.route("/login/doctor")
+@app.route("/login-doctor")
 def login_doctor():
     return render_template("login-doctor.html")
 
