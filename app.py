@@ -73,7 +73,7 @@ def blog_post():
 def home_patient():
     return render_template("home-patient.html")
 
-#halaman janji temu / appointment
+#halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
 def appointment():
     return render_template("appointment.html")
@@ -152,6 +152,26 @@ def edit_pasien():
 @app.route("/appointment-doctor")
 def appointment_doctor():
     return render_template("/appointment-doctor.html")
+
+#doctor for patient navbar
+@app.route("/doctor-homepatient")
+def doctor_homepatient():
+    return render_template("doctor-homepatient.html")
+
+#doctor item for patient navbar
+@app.route("/doctor-item-homepatient")
+def doctor_item_homepatient():
+    return render_template("doctor-item-homepatient.html")
+
+#blog for patient navbar
+@app.route("/blog-homepatient")
+def blog_homepatient():
+    return render_template("blog-homepatient.html")
+
+#blog item for patient navbar
+@app.route("/blog-post-homepatient")
+def blog_post_homepatient():
+    return render_template("blog-post-homepatient.html")
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

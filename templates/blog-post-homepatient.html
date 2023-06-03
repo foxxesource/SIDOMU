@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors | SIDOMU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <style>
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <header class="p-3" style="background-color: #0d47a1;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
+                        <image width="35" xlink:href="static/img/logo.png"></image>
+                    </svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
+                    <li><a href="/home-patient" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/appointment" class="nav-link px-2 text-white">Appointment</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">My List</a></li>
+                    <li><a href="/doctor" class="nav-link px-2 text-white">Doctors</a></li>
+                    <li><a href="/blog" class="nav-link px-2 text-white">Blog</a></li>
+                    <li><a href="/info-patient" class="nav-link px-2 text-white">User Settings</a></li>
+                </ul>
+
+                <div class="text-end">
+                    <a href="#" class="nav-link px-2 text-white">
+                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                            alt="mdo" width="32" height="32" class="rounded-circle">
+                        bintang.duinata31@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <header class="py-5 inner-header" style="background-color: #0d47a1;">
+        <div class="container py-4 px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <div class="text-center">
+                            <h1 class="fw-bold text-white">The Blog Post</h1>
+                            <p class="fw-normal text-white-50 mb-0"><a class="text-white"
+                                    href="/blog-homepatient">Blog</a> <i class="bi-arrow-right"></i> Blog Post</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="pb-5 mt-n5">
+        <div class="container px-5 mb-5">
+            <div class="row gx-5">
+                <div class="col-lg-9 mx-auto">
+                    <div class="bg-white shadow-sm p-5 rounded-3">
+                        <h1 class="fw-bold text-black mb-3">Boots on the Ground, Inclusive Thought Provoking Ideas
+                        </h1>
+                        <p class="fs-5 fw-light text-dark-50 mb-4">Empower communities and energize engaging ideas;
+                            scale and impact do-gooders while disruptring industries. Venture philanthropy benefits
+                            corporations and people by moving the needle.
+                        </p>
+                        <div class="d-flex align-items-center my-5">
+                            <img class="img-fluid rounded-circle" src="static/img/d1.png" alt="...">
+                            <div class="ms-3">
+                                <div class="fw-bold">Siti</div>
+                                <div class="text-muted small">Feb 5 · 6 min read</div>
+                            </div>
+                            <div class="ms-auto">
+                                <a href="#" class="text-primary me-2"><span class="bi bi-facebook"></span></a>
+                                <a href="#" class="text-primary mx-2"><span class="bi bi-google"></span></a>
+                                <a href="#" class="text-primary mx-2"><span class="bi bi-twitter"></span></a>
+                                <a href="#" class="text-primary ms-2"><span class="bi bi-save-fill"></span></a>
+                            </div>
+                        </div>
+                        <!-- Post content-->
+                        <div>
+                            <!-- Preview image figure-->
+                            <figure class="mb-4"><img class="img-fluid rounded" src="static/img/big-blog.jpg" alt="...">
+                            </figure>
+                            <!-- Post content-->
+                            <section>
+                                <h4 class="fw-bolder mb-4 mt-5">New inovation about medical services</h4>
+                                <p class="fs-5 mb-4">Facilis enim voluptatibus qui voluptatum nemo non, facere,
+                                    fugiat
+                                    deserunt dicta ab sunt in sequi, assumenda nobis ipsam quidem corporis. Nemo,
+                                    aliquam.
+                                </p>
+                                <p class="fs-6 mb-4">Science is an enterprise that should be cherished as an
+                                    activity of
+                                    the free human mind. Because it transforms who we are, how we live, and it gives
+                                    us
+                                    an understanding of our place in the universe.</p>
+                                <p class="fs-6 mb-4">The universe is large and old, and the ingredients for life as
+                                    we
+                                    know it are everywhere, so there's no reason to think that Earth would be unique
+                                    in
+                                    that regard. Whether of not the life became intelligent is a different question,
+                                    and
+                                    we'll see if we find that.</p>
+                                <p class="fs-6 mb-4">If you get asteroids about a kilometer in size, those are large
+                                    enough and carry enough energy into our system to disrupt transportation,
+                                    communication, the food chains, and that can be a really bad day on Earth.</p>
+                                <h4 class="fw-bolder mb-4 mt-5">I have odd cosmic thoughts every day</h4>
+                                <p class="fs-5 mb-4">For me, the most fascinating interface is Twitter. I have odd
+                                    cosmic thoughts every day and I realized I could hold them to myself or share
+                                    them
+                                    with people who might be interested.</p>
+                                <p class="fs-6 mb-4">Venus has a runaway greenhouse effect. I kind of want to know
+                                    what
+                                    happened there because we're twirling knobs here on Earth without knowing the
+                                    consequences of it. Mars once had running water. It's bone dry today. Something
+                                    bad
+                                    happened there as well.</p>
+                                <p class="fs-6 mb-4">Laborum placeat quas accusantium vitae perferendis dolores
+                                    possimus
+                                    tempora, qui consectetur hic ullam autem. Enim, rerum obcaecati numquam quaerat
+                                    necessitatibus voluptatem? Repellat!</p>
+                                <p class="fs-6 mb-4">Quasi, quos quaerat? Sint at odit possimus ullam saepe suscipit
+                                    officiis nobis eaque, laudantium ut earum tempore repellendus mollitia odio nam!
+                                    Unde?</p>
+                                <p class="fs-6 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
+                                    explicabo unde perferendis reprehenderit ullam nobis? Laborum amet voluptatem
+                                    sunt
+                                    natus? Tempore commodi corporis accusamus laudantium assumenda blanditiis aut
+                                    nobis
+                                    culpa.</p>
+                                <div class="border-top text-center pt-5">
+                                    <a class="btn btn-outline-primary" href="/blog-homepatient">Back to Blog
+                                        Overview</a>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-dark py-4 mt-auto copyright-footer">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright © <span class="fw-bold text-warning">SIDOMU</span> 2023
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="/">Home</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/hospitals">Hospitals</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">Doctors</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/blog">Blog</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/about">About</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
