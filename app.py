@@ -78,26 +78,80 @@ def home_patient():
 def appointment():
     return render_template("appointment.html")
 
+# Halaman Info User Pasien
+# @app.route("/patient/<email>", methods=["GET"])
+# def user(email):
+#     token_receive = request.cookies.get(TOKEN_KEY)
+#     try:
+#         payload = jwt.decode(
+#             token_receive,
+#             SECRET_KEY,
+#             algorithms=["HS256"]
+#         )
+#         status= email == payload.get("id")
+#         patient_info = db.patient.find_one(
+#             {"email" : email},
+#             {"_id" : False}
+#             )
+#         return render_template("user-patient.html", 
+#                         patient_info=patient_info,
+#                         status=status)
+#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+#         return redirect(url_for("home"))
+@app.route("/info-patient", methods=["GET"])
+def info_patient():
+    return render_template("info-patient.html")
+
 # Halaman Edit User Pasien
-@app.route("/patient/<email>", methods=["GET"])
-def user(email):
-    token_receive = request.cookies.get(TOKEN_KEY)
-    try:
-        payload = jwt.decode(
-            token_receive,
-            SECRET_KEY,
-            algorithms=["HS256"]
-        )
-        status= email == payload.get("id")
-        patient_info = db.patient.find_one(
-            {"email" : email},
-            {"_id" : False}
-            )
-        return render_template("user-patient.html", 
-                        patient_info=patient_info,
-                        status=status)
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+# @app.route("/update_profile", methods=["POST"])
+# def update_profile():
+#     token_receive = request.cookies.get(TOKEN_KEY)
+#     try:
+#         payload = jwt.decode(
+#             token_receive,
+#             SECRET_KEY,
+#             algorithms=["HS256"]
+#         )
+#         username = payload.get("id")
+#         name_receive = request.form.get("name_give")
+#         about_receive = request.form.get("about_give")
+        
+#         new_doc = {
+#             "profile_name" : name_receive,
+#             "profile_info" : about_receive
+#         }
+        
+#         if "file_give" in request.files:
+#             file = request.files.get("file_give")
+#             filename = secure_filename(file.filename)
+#             extension = filename.split(".")[-1]
+#             file_path = f"profile_pics/{username}.{extension}"
+#             file.save("./static/" + file_path)
+#             new_doc["profile_pic"] = filename
+#             new_doc["profile_pic_real"] = file_path
+
+#         db.user.update_one(
+#             {"username" : username},
+#             {"$set" : new_doc}
+#         )
+#         db.posts.update_one(
+#             {"username" : username},
+#             {"$set" : new_doc}
+#         )
+#         return jsonify({
+#             "result" : "success",
+#             "msg" : "Your profile has been updated"
+#         })
+#     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+#         return redirect(url_for("home"))
+@app.route("/edit-patient")
+def edit_pasien():
+    return render_template("user-patient.html")
+
+#List patient Appointment with doctor
+@app.route("/appointment-doctor")
+def appointment_doctor():
+    return render_template("/appointment-doctor.html")
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
