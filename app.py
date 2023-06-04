@@ -178,5 +178,20 @@ def blog_post_homepatient():
 def home_doctor():
     return render_template("doctor/home-doctor.html")
 
+#list schedule for doctor
+@app.route("/appointment-patient")
+def appointment_patient():
+    return render_template("doctor/appointment-patient.html")
+
+#User info for doctor
+@app.route("/info-doctor")
+def info_doctor():
+    return render_template("doctor/info-doctor.html")
+
+#User edit for doctor
+@app.route("/user-doctor")
+def user_doctor():
+    return render_template("doctor/user-doctor.html")
+
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
