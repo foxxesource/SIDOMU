@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Edit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+        integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background: rgb(209, 204, 204);
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: blue;
+        }
+
+        .profile-button {
+            background: blue;
+            box-shadow: none;
+            border: none;
+        }
+
+        .labels {
+            font-size: 11px
+        }
+
+        .add-experience:hover {
+            background: blue;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+
+<body>
+    <header class="p-3" style="background-color: #0d47a1;">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
+                        <image width="35" xlink:href="static/img/logo.png"></image>
+                    </svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
+                    <li><a href="/home-doctor" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="/appointment-patient" class="nav-link px-2 text-white">My Schedule</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">User Settings</a></li>
+                </ul>
+
+                <div class="text-end">
+                    <a href="#" class="nav-link px-2 text-white">
+                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                            alt="mdo" width="32" height="32" class="rounded-circle">
+                        bintang.duinata@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <header class="py-5 inner-header" style="background-color: #0d47a1;">
+        <div class="container py-4 px-5">
+            <div class="row gx-5 align-items-center justify-content-center">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1 class="fw-bold text-white">User Info</h1>
+                        <p class="lead fw-normal text-white-50 mb-0">Make sure all your data are legit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        width="150px"
+                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
+                        class="font-weight-bold">Bintang Duinata</span><span
+                        class="text-black-50">bintang.duinata31@gmail.com</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Setting</h4>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">First Name</label>
+                            <input type="text" class="form-control" placeholder="First Name" value="">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Last Name</label>
+                            <input type="text" class="form-control" placeholder="Last Name" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6"><label class="labels">Mobile Number</label>
+                            <input type="text" class="form-control" placeholder="Mobile Number" value="">
+                        </div>
+                        <div class="col-md-6"><label class="labels">Specialist</label>
+                            <p>
+                                Gynecology, Health Care & Obstetrics
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels fw-bold">Education</label>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Year</label>
+                            <p>
+                                2006
+                            </p>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Degree</label>
+                            <p>
+                                MBBS, M.D
+                            </p>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Institute</label>
+                            <p>
+                                University Of London
+                            </p>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Year</label>
+                            <p>
+                                2010
+                            </p>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Degree</label>
+                            <p>
+                                M.D. of Medicine
+                            </p>
+                        </div>
+                        <div class="col-md-4"><label class="labels">Institute</label>
+                            <p>
+                                Australia Medical College
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels fw-bold">Experience</label>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Year</label>
+                            <p>
+                                2006 - 2008
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Department</label>
+                            <p>
+                                MBBS, M.D
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Position</label>
+                            <p>
+                                Senior Prof.
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Hospital</label>
+                            <p>
+                                ProHealth Medical Clinic
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Year</label>
+                            <p>
+                                2010 - 2018
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Department</label>
+                            <p>
+                                M.D. of Medicine
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Position</label>
+                            <p>
+                                Associate Prof.
+                            </p>
+                        </div>
+                        <div class="col-md-3"><label class="labels">Hospital</label>
+                            <p>
+                                Australia Medical College
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels fw-bold">Address</label>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Country</label>
+                            <input type="text" class="form-control" placeholder="Country" value="">
+                        </div>
+                        <div class="col-md-6"><label class="labels">State/Region</label>
+                            <input type="text" class="form-control" placeholder="State" value="">
+                        </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save
+                                Profile</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit
+                            Picture</span><span class="border px-3 p-1 add-experience"><i
+                                class="fa fa-plus"></i>&nbsp;Profile Picture</span></div><br>
+                    <div class="col-md-12"><label class="labels">Additional Details</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <footer class="bg-dark py-4 mt-auto copyright-footer">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright © <span class="fw-bold text-warning">SIDOMU</span> 2023
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#">Home</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="/appointment-patient">My Schedule</a>
+                    <span class="text-white mx-1">·</span>
+                    <a class="link-light small" href="#">User Settings</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

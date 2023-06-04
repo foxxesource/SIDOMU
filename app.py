@@ -189,7 +189,7 @@ def info_doctor():
     return render_template("doctor/info-doctor.html")
 
 #User edit for doctor
-@app.route("/user-doctor")
+@app.route("/edit-doctor")
 def user_doctor():
     return render_template("doctor/user-doctor.html")
 
