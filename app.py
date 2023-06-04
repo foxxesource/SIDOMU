@@ -71,12 +71,12 @@ def blog_post():
 # Halaman Pasien
 @app.route("/home-patient", methods=["GET"])
 def home_patient():
-    return render_template("home-patient.html")
+    return render_template("patient/home-patient.html")
 
 #halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
 def appointment():
-    return render_template("appointment.html")
+    return render_template("patient/appointment.html")
 
 # Halaman Info User Pasien
 # @app.route("/patient/<email>", methods=["GET"])
@@ -100,7 +100,7 @@ def appointment():
 #         return redirect(url_for("home"))
 @app.route("/info-patient", methods=["GET"])
 def info_patient():
-    return render_template("info-patient.html")
+    return render_template("patient/info-patient.html")
 
 # Halaman Edit User Pasien
 # @app.route("/update_profile", methods=["POST"])
@@ -146,32 +146,37 @@ def info_patient():
 #         return redirect(url_for("home"))
 @app.route("/edit-patient")
 def edit_pasien():
-    return render_template("user-patient.html")
+    return render_template("patient/user-patient.html")
 
 #List patient Appointment with doctor
 @app.route("/appointment-doctor")
 def appointment_doctor():
-    return render_template("/appointment-doctor.html")
+    return render_template("patient/appointment-doctor.html")
 
-#doctor for patient navbar
+#doctor page for patient navbar
 @app.route("/doctor-homepatient")
 def doctor_homepatient():
-    return render_template("doctor-homepatient.html")
+    return render_template("patient/doctor-homepatient.html")
 
-#doctor item for patient navbar
+#doctor item page for patient navbar
 @app.route("/doctor-item-homepatient")
 def doctor_item_homepatient():
-    return render_template("doctor-item-homepatient.html")
+    return render_template("patient/doctor-item-homepatient.html")
 
-#blog for patient navbar
+#blog page for patient navbar
 @app.route("/blog-homepatient")
 def blog_homepatient():
-    return render_template("blog-homepatient.html")
+    return render_template("patient/blog-homepatient.html")
 
-#blog item for patient navbar
+#blog item page for patient navbar
 @app.route("/blog-post-homepatient")
 def blog_post_homepatient():
-    return render_template("blog-post-homepatient.html")
+    return render_template("patient/blog-post-homepatient.html")
+
+#home page for doctor
+@app.route("/home-doctor")
+def home_doctor():
+    return render_template("doctor/home-doctor.html")
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
