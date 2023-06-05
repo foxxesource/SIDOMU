@@ -21,6 +21,44 @@
             background: #0d47a1;
         }
     </style>
+    <script>
+        function sign_in() {
+            let email = $("#input-email").val();
+            let password = $("#input-password").val();
+
+            if (email === "") {
+                $("#help-email-login").text("Please input your email.");
+                $("#input-email").focus();
+                return;
+            } else {
+                $("#help-email-login").text("");
+            }
+
+            if (password === "") {
+                $("#help-password-login").text("Please input your password.");
+                $("#input-password").focus();
+                return;
+            } else {
+                $("#help-password-login").text("");
+            }
+            $.ajax({
+                type: "POST",
+                url: "/sign_in_doctor",
+                data: {
+                    email_give: email,
+                    password_give: password,
+                },
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        $.cookie("mytoken", response["token"], { path: "/home-doctor" });
+                        window.location.replace("/home-doctor");
+                    } else {
+                        alert(response["msg"]);
+                    }
+                },
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -88,12 +126,14 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">E-Mail Address <small
                                     class="text-danger">*</small></label>
-                            <input type="email" class="form-control" placeholder="name@example.com">
+                            <input type="email" id="input-email" class="form-control" placeholder="name@example.com">
+                            <p id="help-email-login" class="text-danger"></p>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small text-muted">Password <small
                                     class="text-danger">*</small></label>
-                            <input type="password" class="form-control" placeholder="Enter Password">
+                            <input type="password" id="input-password" class="form-control" placeholder="Enter Password">
+                            <p id="help-password-login" class="text-danger"></p>
                         </div>
                         <button type="button"
                             class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Sign

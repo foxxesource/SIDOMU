@@ -28,8 +28,7 @@ TOKEN_KEY= "mytoken"
 
 @app.route("/")
 def home():
-    msg = request.args.get("msg")
-    return render_template("index.html", msg=msg)
+    return render_template("index.html")
 
 @app.route("/hospitals", methods=["GET"])
 def hospitals():
@@ -43,7 +42,7 @@ def hospital1():
 def register():
     return render_template("register.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET"])
 def login():
     msg = request.args.get("msg")
     return render_template("login.html", msg=msg)
@@ -86,7 +85,43 @@ def sign_in():
     
 @app.route("/login-doctor")
 def login_doctor():
-    return render_template("login-doctor.html")
+    msg = request.args.get("msg")
+    return render_template("login-doctor.html", msg=msg)
+
+#sign in doctor
+@app.route("/sign_in_doctor", methods=["POST"])
+def sign_in_doctor():
+    email_receive = request.form["email_give"]
+    password_receive = request.form["password_give"]
+    result = db.user_doctor.find_one(
+        {
+            "email": email_receive,
+            "password": password_receive,
+        }
+    )
+    if result:
+        payload = {
+            "id": email_receive,
+            # the token will be valid for 24 hours
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+        }
+        token = jwt.encode(payload, SECRET_KEY)
+
+        return jsonify(
+            {
+                "result": "success",
+                "token": token,
+            }
+        )
+    # Let's also handle the case where the id and
+    # password combination cannot be found
+    else:
+        return jsonify(
+            {
+                "result": "fail",
+                "msg": "We could not find a user with that email/password combination",
+            }
+        )
 
 @app.route("/about")
 def about():
@@ -118,11 +153,11 @@ def home_patient():
             SECRET_KEY,
             algorithms=["HS256"]
         )
-        user_info = db.user_patient.find_one({"username" : payload.get("id")})
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
         return render_template("patient/home-patient.html", user_info = user_info)
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
-        return redirect(url_for("home",msg=msg))
+        return redirect(url_for("login",msg=msg))
     except jwt.exceptions.DecodeError:
         msg = "There was a problem logging your in"
         return redirect(url_for("login",msg=msg))
@@ -230,7 +265,20 @@ def blog_post_homepatient():
 #home page for doctor
 @app.route("/home-doctor")
 def home_doctor():
-    return render_template("doctor/home-doctor.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        return render_template("patient/home-doctor.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login_doctor",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login_doctor",msg=msg))
 
 #list schedule for doctor
 @app.route("/appointment-patient")
