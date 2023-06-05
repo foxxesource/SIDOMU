@@ -4,6 +4,8 @@ import jwt
 from dotenv import load_dotenv
 import os
 from os.path import join, dirname
+from datetime import datetime, timedelta
+import hashlib
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -26,7 +28,8 @@ TOKEN_KEY= "mytoken"
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    msg = request.args.get("msg")
+    return render_template("index.html", msg=msg)
 
 @app.route("/hospitals", methods=["GET"])
 def hospitals():
@@ -42,7 +45,44 @@ def register():
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    msg = request.args.get("msg")
+    return render_template("login.html", msg=msg)
+
+#sign in
+@app.route("/sign_in", methods=["POST"])
+def sign_in():
+    email_receive = request.form["email_give"]
+    password_receive = request.form["password_give"]
+    pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+    result = db.user_patient.find_one(
+        {
+            "email": email_receive,
+            "password": pw_hash,
+        }
+    )
+    if result:
+        payload = {
+            "id": email_receive,
+            # the token will be valid for 24 hours
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+        return jsonify(
+            {
+                "result": "success",
+                "token": token,
+            }
+        )
+    # Let's also handle the case where the id and
+    # password combination cannot be found
+    else:
+        return jsonify(
+            {
+                "result": "fail",
+                "msg": "We could not find a user with that email/password combination",
+            }
+        )
     
 @app.route("/login-doctor")
 def login_doctor():
@@ -71,7 +111,21 @@ def blog_post():
 # Halaman Pasien
 @app.route("/home-patient", methods=["GET"])
 def home_patient():
-    return render_template("patient/home-patient.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"username" : payload.get("id")})
+        return render_template("patient/home-patient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login",msg=msg))
 
 #halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
