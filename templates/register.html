@@ -17,10 +17,94 @@
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
     <style>
-         body{
+        body {
             background: #0d47a1;
         }
     </style>
+    <script>
+        function sign_up() {
+            let inputPassword = $("#input-password")
+            let inputPassword2 = $("#input-password2")
+            let email = $("#input-email").val();
+            let password = inputPassword.val();
+            let password2 = inputPassword2.val();
+            let fname = $("#input-fname").val();
+            let lname = $("#input-lname").val();
+
+            if (email === "") {
+                $("#help-email").text("Please input your email.");
+                $("#input-email").focus();
+                return;
+            } else {
+                $("#help-email").text("");
+            }
+
+            if (fname === "") {
+                $("#help-fname").text("Please input your first name.");
+                $("#input-fname").focus();
+                return;
+            } else {
+                $("#help-fname").text("");
+            }
+
+            let helpPassword = $("#help-password");
+            let helpPassword2 = $("#help-password2");
+            if (password === "") {
+                helpPassword.text("Please enter your password")
+                    .removeClass("text-secondary")
+                    .addClass("text-danger");
+                inputPassword.focus();
+                return;
+            } else if (!is_password(password)) {
+                helpPassword.text("For your password, please enter 8-20 English characters, numbers, or the following special characters (!@#$%^&*)")
+                    .removeClass("text-secondary")
+                    .addClass("text-danger");
+                inputPassword.focus();
+                return;
+            } else {
+                helpPassword.text("This password can be used!")
+                    .removeClass("text-danger")
+                    .addClass("text-success")
+            }
+            if (password2 === "") {
+                helpPassword2.text("Please confirm your password")
+                    .removeClass("text-secondary")
+                    .addClass("text-danger");
+                inputPassword2.focus();
+                return;
+            } else if (password2 != password) {
+                helpPassword2.text("The two passwords are not consistent")
+                    .removeClass("text-secondary")
+                    .addClass("text-danger")
+                inputPassword2.focus();
+                return;
+            } else {
+                helpPassword2.text("the two passwords are valid!")
+                    .removeClass("text-danger")
+                    .addClass("text-success")
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/sign_up/save",
+                data: {
+                    email_give: email,
+                    password_give: password,
+                    fname_give: fname,
+                    lname_give: lname
+                },
+                success: function (response) {
+                    alert("You are registered");
+                    window.location.replace("/login");
+                }
+            });
+        }
+
+        function is_password(asValue) {
+            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+            return regExp.test(asValue);
+        }
+    </script>
 </head>
 
 <body>
@@ -91,33 +175,42 @@
                                 <div class="mb-3 col-6 pe-1">
                                     <label for="exampleInputFirst" class="form-label small text-muted">First Name <small
                                             class="text-danger">*</small></label>
-                                    <input type="text" class="form-control" id="exampleInputFirst"
+                                    <input type="text" class="form-control" id="input-fname"
                                         placeholder="Enter First Name">
+                                    <p id="help-fname" class="text-danger mt-1" style="font-size: small;"></p>
                                 </div>
                                 <div class="mb-3 col-6 ps-1">
                                     <label for="exampleInputLast" class="form-label small text-muted">Last Name</label>
-                                    <input type="text" class="form-control" id="exampleInputLast"
+                                    <input type="text" class="form-control" id="input-lname"
                                         placeholder="Enter Last Name">
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label small text-muted">E-Mail Address <small
                                         class="text-danger">*</small></label>
-                                <input type="email" class="form-control" placeholder="Enter E-Mail">
+                                <input type="email" class="form-control" id="input-email" placeholder="Enter E-Mail">
+                                <p id="help-email" class="text-danger mt-1" style="font-size: small;"></p>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label small text-muted">Password <small
                                         class="text-danger">*</small></label>
-                                <input type="password" class="form-control" placeholder="Enter Password">
+                                <input type="password" class="form-control" id="input-password"
+                                    placeholder="Enter Password">
+                                <p id="help-password" class="text-secondary mt-1" style="font-size: small;">
+                                    Please enter 8-20 English characters,
+                                    numbers, or the following special characters (!@#$%^&*)
+                                </p>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label small text-muted">Confirm Your Password <small
                                         class="text-danger">*</small></label>
                                 <input type="password" class="form-control"
-                                    placeholder="Please Enter Your Password Again">
+                                    placeholder="Please Enter Your Password Again" id="input-password2">
+                                <p id="help-password2" class="text-secondary mt-1" style="font-size: small;"></p>
                             </div>
                             <button type="button"
-                                class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Sign
+                                class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase mt-3"
+                                onclick="sign_up()">Sign
                                 Up</button>
                             <p class="text-muted mb-0 mt-3 text-center">Already have an account? <a href="/login"
                                     class="text-mdinfo" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Sign

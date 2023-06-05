@@ -82,6 +82,31 @@ def sign_in():
                 "msg": "We could not find a user with that email/password combination",
             }
         )
+
+#register patient
+@app.route("/sign_up/save", methods=["POST"])
+def sign_up():
+    fname_receive = request.form.get("fname_give")
+    lname_receive = request.form.get("lname_give")
+    email_receive = request.form.get("email_give")
+    password_receive = request.form.get("password_give")
+    password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+    doc = {
+        "first_name" : fname_receive,
+        "last_name" : lname_receive,
+        "email" : email_receive,
+        "password" : password_hash,
+        "profile_name" : fname_receive,
+        "profile_pic" : "",
+        "profile_pic_real" : "profile_pics/profile_placeholder.png",
+        "additional_details" : "",
+        "age" : "",
+        "mobile_number" : "",
+        "country" : "",
+        "state_region" : ""
+    }
+    db.user_patient.insert_one(doc)
+    return jsonify({"result" : "success"})
     
 @app.route("/login-doctor")
 def login_doctor():
