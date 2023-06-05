@@ -17,7 +17,7 @@
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
     <style>
-         body{
+        body {
             background: #0d47a1;
         }
     </style>
@@ -131,10 +131,12 @@
                         <div class="mb-3">
                             <label class="form-label small text-muted">Password <small
                                     class="text-danger">*</small></label>
-                            <input type="password" id="input-password" class="form-control" placeholder="Enter Password">
+                            <input type="password" id="input-password" class="form-control"
+                                placeholder="Enter Password">
                         </div>
                         <button type="button"
-                            class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Sign
+                            class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase"
+                            onclick="sign_in()">Sign
                             In</button>
                         <p class="text-muted mb-0 mt-3 text-center">Don’t have an account? <a href="/register"
                                 class="text-mdinfo">Sign
