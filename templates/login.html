@@ -51,7 +51,7 @@
                 },
                 success: function (response) {
                     if (response["result"] === "success") {
-                        $.cookie("mytoken", response["token"], { path: "/home-patient" });
+                        $.cookie("mytoken", response["token"], { path: "/" });
                         window.location.replace("/home-patient");
                     } else {
                         alert(response["msg"]);
