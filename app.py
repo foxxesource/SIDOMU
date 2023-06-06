@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from pymongo import MongoClient
 import jwt
+# pip install PyJWT==1.7.0
 from dotenv import load_dotenv
 import os
 from os.path import join, dirname
@@ -22,7 +23,7 @@ DB_NAME = os.environ.get("DB_NAME")
 client = MongoClient(MONGODB_URL)
 db = client[DB_NAME]
 
-SECRET_KEY = "finalproject"
+SECRET_KEY = "BINTANGSAH123"
 
 TOKEN_KEY= "mytoken"
 
@@ -187,29 +188,6 @@ def home_patient():
         msg = "There was a problem logging your in"
         return redirect(url_for("home",msg=msg))
 
-#patient profile
-@app.route("/get_profile", methods=["GET"])
-def get_profile():
-    token_receive = request.cookies.get(TOKEN_KEY)
-    try:
-        payload = jwt.decode(
-            token_receive,
-            SECRET_KEY,
-            algorithms=["HS256"]
-        )
-        profilename_receive = request.args.get("profilename_give")
-        if profilename_receive == "" :
-            profile = list(db.user_patient.find({}))
-        else : 
-            profile = list(db.user_patient.find({"profile_name" : profilename_receive}))
-        return jsonify({
-            "result" : "success",
-            "msg" : "successfully fetched profile",
-            "profile" : profile
-        })
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
-
 #halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
 def appointment():
@@ -235,9 +213,9 @@ def appointment():
 #                         status=status)
 #     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
 #         return redirect(url_for("home"))
-@app.route("/info-patient", methods=["GET"])
-def info_patient():
-    return render_template("patient/info-patient.html")
+# @app.route("/info-patient", methods=["GET"])
+# def info_patient():
+#     return render_template("patient/info-patient.html")
 
 # Halaman Edit User Pasien
 # @app.route("/update_profile", methods=["POST"])
@@ -281,9 +259,25 @@ def info_patient():
 #         })
 #     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
 #         return redirect(url_for("home"))
-@app.route("/edit-patient")
-def edit_pasien():
-    return render_template("patient/user-patient.html")
+@app.route("/info-patient/<email>", methods=["GET"])
+def info_patient(email):
+    token_receive = request.cookies.get(TOKEN_KEY)
+    # try:
+    payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+    status= email == payload.get("id")
+    user_info = db.user_patient.find_one(
+            {"email" : email},
+            {"_id" : False}
+            )
+    return render_template("patient/info-patient.html", 
+                        user_info=user_info,
+                        status=status)
+    # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+    #     return redirect(url_for("home"))
 
 #List patient Appointment with doctor
 @app.route("/appointment-doctor")
@@ -301,9 +295,23 @@ def doctor_item_homepatient():
     return render_template("patient/doctor-item-homepatient.html")
 
 #blog page for patient navbar
-@app.route("/blog-homepatient")
+@app.route("/blog-homepatient", methods=["GET"])
 def blog_homepatient():
-    return render_template("patient/blog-homepatient.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/blog-homepatient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
 
 #blog item page for patient navbar
 @app.route("/blog-post-homepatient")
