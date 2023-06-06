@@ -182,10 +182,33 @@ def home_patient():
         return render_template("patient/home-patient.html", user_info = user_info)
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
-        return redirect(url_for("login",msg=msg))
+        return redirect(url_for("home",msg=msg))
     except jwt.exceptions.DecodeError:
         msg = "There was a problem logging your in"
-        return redirect(url_for("login",msg=msg))
+        return redirect(url_for("home",msg=msg))
+
+#patient profile
+@app.route("/get_profile", methods=["GET"])
+def get_profile():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        profilename_receive = request.args.get("profilename_give")
+        if profilename_receive == "" :
+            profile = list(db.user_patient.find({}))
+        else : 
+            profile = list(db.user_patient.find({"profile_name" : profilename_receive}))
+        return jsonify({
+            "result" : "success",
+            "msg" : "successfully fetched profile",
+            "profile" : profile
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 #halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
