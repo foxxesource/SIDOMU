@@ -191,7 +191,17 @@ def home_patient():
 #halaman form janji temu / appointment
 @app.route("/appointment", methods=["GET"])
 def appointment():
-    return render_template("patient/appointment.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/appointment.html", user_info = user_info)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 # @app.route("/info-patient", methods=["GET"])
 # def info_patient():

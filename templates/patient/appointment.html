@@ -37,8 +37,8 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="/hospitals" class="nav-link px-2 text-white">Appointment</a></li>
+                    <li><a href="/home-patient" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Appointment</a></li>
                     <li><a href="/blog" class="nav-link px-2 text-white">My List</a></li>
                     <li><a href="/doctor" class="nav-link px-2 text-white">Doctors</a></li>
                     <li><a href="/blog" class="nav-link px-2 text-white">Blog</a></li>
@@ -46,10 +46,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata31@gmail.com
+                    <a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}"
+                            alt="profilepic" width="32" height="32" class="rounded-circle">
+                        {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -71,19 +71,19 @@
                                     <label for="exampleInputFirst" class="form-label small text-muted">First Name <small
                                             class="text-danger">*</small></label>
                                     <input type="text" class="form-control" id="exampleInputFirst"
-                                        placeholder="Enter First Name">
+                                        placeholder="Enter First Name" value="{{ user_info.first_name }}">
                                 </div>
                                 <div class="mb-3 col-6 ps-2">
                                     <label for="exampleInputLast" class="form-label small text-muted">Last Name</label>
                                     <input type="text" class="form-control" id="exampleInputLast"
-                                        placeholder="Enter Last Name">
+                                        placeholder="Enter Last Name" value="{{ user_info.last_name }}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="mb-3 col-6 pe-2">
                                     <label class="form-label small text-muted">Mobile Number <small
                                             class="text-danger">*</small></label>
-                                    <input type="number" class="form-control" placeholder="Enter Mobile Number">
+                                    <input type="number" class="form-control" placeholder="Enter Mobile Number" value="{{ user_info.mobile_number }}">
                                 </div>
                                 <div class="mb-3 col-6 ps-2">
                                     <label class="form-label small text-muted">Doctor <small
@@ -102,18 +102,6 @@
                                                     Putri</a></li>
                                         </ul>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-6 pe-2">
-                                    <label class="form-label small text-muted">Appointment Date <small
-                                            class="text-danger">*</small></label>
-                                    <input type="number" class="form-control" placeholder="Example - 03/Jun/2023">
-                                </div>
-                                <div class="mb-3 col-6 ps-2">
-                                    <label class="form-label small text-muted">Appointment Time <small
-                                            class="text-danger">*</small></label>
-                                    <input type="email" class="form-control" placeholder="Example - 12:00PM">
                                 </div>
                             </div>
                             <div class="mb-3">
