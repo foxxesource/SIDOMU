@@ -43,7 +43,11 @@
         }
     </style>
     <script>
-
+        function sign_out() {
+            $.removeCookie("mytoken", { path: "/" });
+            alert("Signed Out!!");
+            window.location.href = "/";
+        }
     </script>
 </head>
 
@@ -53,7 +57,7 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
-                        <image width="35" xlink:href="static/img/logo.png"></image>
+                        <image width="35" href="{{ url_for('static', filename='img/logo.png') }}"></image>
                     </svg>
                 </a>
 
@@ -68,10 +72,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata31@gmail.com
+                    <a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
+                            width="32" height="32" class="rounded-circle">
+                        {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -93,10 +97,9 @@
         <div class="row">
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                        width="150px"
-                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
-                        class="font-weight-bold">Bintang Duinata</span><span
-                        class="text-black-50">bintang.duinata31@gmail.com</span><span> </span></div>
+                        width="150px" src="{{ url_for('static', filename=user_info.profile_pic_real) }}"><span
+                        class="font-weight-bold">{{ user_info.first_name }} {{ user_info.last_name }}</span><span
+                        class="text-black-50">{{ user_info.email }}</span><span> </span></div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
@@ -106,34 +109,35 @@
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">First Name</label>
                             <p>
-                                Bintang
+                                {{ user_info.first_name }}
                             </p>
                         </div>
                         <div class="col-md-6"><label class="labels">Last Name</label>
                             <p>
-                                Duinata
+                                {{ user_info.last_name }}
                             </p>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Mobile Number</label>
                             <p>
-                                0812-1234-5678
+                                {{ user_info.mobile_number }}
                             </p>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6"><label class="labels">Country</label>
                             <p>
-                                Indonesia
+                                {{ user_info.country }}
                             </p>
                         </div>
                         <div class="col-md-6"><label class="labels">State/Region</label>
                             <p>
-                                Jakarta
+                                {{ user_info.state_region }}
                             </p>
                         </div>
-                        <div class="mt-5 text-center"><button class="btn btn-danger" type="button">Log
+                        <div class="mt-5 text-center"><button class="btn btn-danger" type="button" onclick="sign_out()"
+                                aria-label="logout">Log
                                 Out</button></div>
                     </div>
                 </div>
@@ -141,24 +145,22 @@
             <div class="col-md-4">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                            Profile</span><a href="/edit-patient"><button class="btn btn-primary profile-button"
+                            Profile</span><a href="/user-patient/{{ user_info.email }}"><button class="btn btn-primary profile-button"
                                 type="button">Edit</button></a>
                     </div><br>
                     <div class="col-md-12"><label class="labels">Age</label>
                         <p>
-                            25
+                            {{ user_info.age }}
                         </p>
                     </div> <br>
                     <div class="col-md-12"><label class="labels">Additional Details</label>
                         <p>
-                            I like Playing Games
+                            {{ user_info.additional_details }}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
     </div>
     <footer class="bg-dark py-4 mt-auto copyright-footer">
         <div class="container px-5">
