@@ -19,8 +19,65 @@
     <style>
     </style>
     <script>
-        function showGenre(item) {
-            document.getElementById("dropdownMenu1").innerHTML = item.innerHTML;
+        function appointment() {
+            let fname = $("#input-fname").val();
+            let lname = $("#input-lname").val();
+            let mobilenumber = $("#input-mobilenumber").val();
+            var doctorText = $('#input-doctor option:selected').text();
+            var doctorValue = $("#input-doctor").val();
+            let email = $("#input-email").val();
+            let message = $("#input-message").val();
+            if (fname === "") {
+                $("#help-fname").text("Please input your first name.");
+                $("#input-fname").focus();
+                return;
+            } else {
+                $("#help-fname").text("");
+            }
+            if (mobilenumber === "") {
+                $("#help-mobilenumber").text("Please input your mobile number.");
+                $("#input-mobilenumber").focus();
+                return;
+            } else {
+                $("#help-mobilenumber").text("");
+            }
+            if (doctorValue === "") {
+                $("#help-doctor").text("Please choose your doctor");
+                $("#input-doctor").focus();
+                return;
+            } else {
+                $("#help-doctor").text("");
+            }
+            if (email === "") {
+                $("#help-email").text("Please input your email.");
+                $("#input-email").focus();
+                return;
+            } else {
+                $("#help-email").text("");
+            }
+            if (message === "") {
+                $("#help-message").text("Please input your message");
+                $("#input-message").focus();
+                return;
+            } else {
+                $("#help-message").text("");
+            }
+            $.ajax({
+                type: "POST",
+                url: "/appointment/save",
+                data: {
+                    fname_give: fname,
+                    lname_give: lname,
+                    mobilenumber_give: mobilenumber,
+                    doctor_give: doctorText,
+                    email_give: email,
+                    message_give: message
+                },
+                success: function (response) {
+                    alert("Your appointment is registered!");
+                    window.location.replace("/appointment-doctor");
+                }
+            });
         }
     </script>
 </head>
@@ -47,8 +104,8 @@
 
                 <div class="text-end">
                     <a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">
-                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}"
-                            alt="profilepic" width="32" height="32" class="rounded-circle">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
+                            width="32" height="32" class="rounded-circle">
                         {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
@@ -65,17 +122,18 @@
                     <div class="bg-white shadow-sm p-5 rounded-3">
                         <h3 class="fw-bold text-black mb-2">Book your appointment</h3>
                         <p class="text-muted fw-light">Online Appointment Form</p>
-                        <form action="index.html" class="text-start pt-3">
+                        <form action="appointment-doctor.html" class="text-start pt-3">
                             <div class="row">
                                 <div class="mb-3 col-6 pe-2">
                                     <label for="exampleInputFirst" class="form-label small text-muted">First Name <small
                                             class="text-danger">*</small></label>
-                                    <input type="text" class="form-control" id="exampleInputFirst"
+                                    <input type="text" class="form-control" id="input-fname"
                                         placeholder="Enter First Name" value="{{ user_info.first_name }}">
+                                    <p id="help-fname" class="text-danger mt-1" style="font-size: small;"></p>
                                 </div>
                                 <div class="mb-3 col-6 ps-2">
                                     <label for="exampleInputLast" class="form-label small text-muted">Last Name</label>
-                                    <input type="text" class="form-control" id="exampleInputLast"
+                                    <input type="text" class="form-control" id="input-lname"
                                         placeholder="Enter Last Name" value="{{ user_info.last_name }}">
                                 </div>
                             </div>
@@ -83,35 +141,40 @@
                                 <div class="mb-3 col-6 pe-2">
                                     <label class="form-label small text-muted">Mobile Number <small
                                             class="text-danger">*</small></label>
-                                    <input type="number" class="form-control" placeholder="Enter Mobile Number" value="{{ user_info.mobile_number }}">
+                                    <input type="number" id="input-mobilenumber" class="form-control"
+                                        placeholder="Enter Mobile Number" value="{{ user_info.mobile_number }}">
+                                    <p id="help-mobilenumber" class="text-danger mt-1" style="font-size: small;"></p>
                                 </div>
                                 <div class="mb-3 col-6 ps-2">
                                     <label class="form-label small text-muted">Doctor <small
                                             class="text-danger">*</small></label>
-                                    <div class="dropdown">
-                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenu1">
-                                            Choose Your Doctor
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                            <li><a class="dropdown-item" href="#" onclick="showGenre(this)">Dr. Bintang
-                                                    Duinata</a></li>
-                                            <li><a class="dropdown-item" href="#" onclick="showGenre(this)">Dr.
-                                                    Kandias</a></li>
-                                            <li><a class="dropdown-item" href="#" onclick="showGenre(this)">Dr. Raihan
-                                                    Putri</a></li>
-                                        </ul>
-                                    </div>
+                                    <select class="btn btn-primary" id="input-doctor">
+                                        <option value="" selected style="display:none">Choose your doctor</option>
+                                        <option value="1">Dr.Bintang Duinata</option>
+                                        <option value="2">Dr.Kandias</option>
+                                        <option value="3">Dr.Raihan Putri</option>
+                                    </select>
+                                    <p id="help-doctor" class="text-danger mt-1" style="font-size: small;"></p>
                                 </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Email <small
+                                    class="text-danger">*</small></label>
+                                <input type="text" class="form-control" id="input-email" placeholder="Enter First Name"
+                                    value="{{ user_info.email }}" disabled>
+                                <p id="help-email" class="text-secondary mt-1" style="font-size: small;">Your email can't be change</p>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label small text-muted">Message <small
                                         class="text-danger">*</small></label>
-                                <textarea class="form-control hight-auto" placeholder="Enter your message here..."
-                                    rows="4" data-sb-validations="required"></textarea>
+                                <textarea class="form-control hight-auto" id="input-message"
+                                    placeholder="Enter your message here..." rows="4"
+                                    data-sb-validations="required"></textarea>
+                                <p id="help-message" class="text-danger mt-1" style="font-size: small;"></p>
                             </div>
                             <button type="button"
-                                class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase">Book
+                                class="btn btn-warning fw-bold fs-7 rounded-3 w-100 border-0 px-4 py-3 text-uppercase"
+                                onclick="appointment()">Book
                                 An Appointment</button>
                         </form>
                     </div>
@@ -153,3 +216,6 @@
             </div>
         </div>
     </footer>
+</body>
+
+</html>

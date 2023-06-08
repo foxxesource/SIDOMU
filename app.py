@@ -211,6 +211,28 @@ def appointment():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+#server save appointment
+@app.route("/appointment/save", methods=["POST"])
+def appointment_save():
+    fname_receive = request.form.get("fname_give")
+    lname_receive = request.form.get("lname_give")
+    mobilenumber_receive = request.form.get("mobilenumber_give")
+    doctor_receive = request.form.get("doctor_give")
+    email_receive = request.form.get("email_give")
+    message_receive = request.form.get("message_give")
+    # exists = bool(db.user_patient.find_one({"email" : email_receive}))
+    doc = {
+        "first_name" : fname_receive,
+        "last_name" : lname_receive,
+        "mobile_number" : mobilenumber_receive,
+        "doctor" : doctor_receive,
+        "email" : email_receive,
+        "message" : message_receive
+    }
+    db.appointment_patient.insert_one(doc)
+    return jsonify({"result" : "success"})
+
+
 # @app.route("/info-patient", methods=["GET"])
 # def info_patient():
 #     return render_template("patient/info-patient.html")
