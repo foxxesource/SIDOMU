@@ -30,6 +30,7 @@
             let password2 = inputPassword2.val();
             let fname = $("#input-fname").val();
             let lname = $("#input-lname").val();
+            let helpEmail = $("#help-email")
 
             if (email === "") {
                 $("#help-email").text("Please input your email.");
@@ -94,6 +95,17 @@
                     lname_give: lname
                 },
                 success: function (response) {
+                    if (response["exists"]) {
+                        helpEmail.text("This email is already in use")
+                            .removeClass("text-secondary")
+                            .addClass("text-danger");
+                        inputEmail.focus();
+                        return;
+                    } else {
+                        helpEmail.text("Your email is available!")
+                            .removeClass("text-danger")
+                            .addClass("text-success");
+                    }
                     alert("You are registered");
                     window.location.replace("/login");
                 }
@@ -103,6 +115,34 @@
         function is_password(asValue) {
             var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
             return regExp.test(asValue);
+        }
+
+        function check_dup() {
+            let inputEmail = $("#input-email")
+            let email = inputEmail.val();
+            let helpEmail = $("#help-email")
+            // helpId.addClass("is-loading")
+            $.ajax({
+                type: "POST",
+                url: "/sign_up/check_dup",
+                data: {
+                    email_give: email,
+                },
+                success: function (response) {
+                    if (response["exists"]) {
+                        helpEmail.text("This email is already in use")
+                            .removeClass("text-secondary")
+                            .addClass("text-danger");
+                        inputEmail.focus();
+                        return;
+                    } else {
+                        helpEmail.text("Your email is available!")
+                            .removeClass("text-danger")
+                            .addClass("text-success");
+                    }
+                    // helpId.removeClass("is-loading")
+                }
+            });
         }
     </script>
 </head>

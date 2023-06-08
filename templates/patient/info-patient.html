@@ -13,6 +13,7 @@
         crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
         integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" crossorigin="anonymous">
     <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
@@ -136,8 +137,8 @@
                                 {{ user_info.state_region }}
                             </p>
                         </div>
-                        <div class="mt-5 text-center"><button class="btn btn-danger" type="button" onclick="sign_out()"
-                                aria-label="logout">Log
+                        <div class="mt-5 text-center"><button class="btn btn-danger" type="button"
+                                onclick="sign_out()">Log
                                 Out</button></div>
                     </div>
                 </div>
@@ -145,8 +146,8 @@
             <div class="col-md-4">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                            Profile</span><a href="/user-patient/{{ user_info.email }}"><button class="btn btn-primary profile-button"
-                                type="button">Edit</button></a>
+                            Profile</span><a href="/user-patient/{{ user_info.email }}"><button
+                                class="btn btn-primary profile-button" type="button">Edit</button></a>
                     </div><br>
                     <div class="col-md-12"><label class="labels">Age</label>
                         <p>

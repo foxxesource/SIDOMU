@@ -92,6 +92,7 @@ def sign_up():
     email_receive = request.form.get("email_give")
     password_receive = request.form.get("password_give")
     password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+    exists = bool(db.user_patient.find_one({"email" : email_receive}))
     doc = {
         "first_name" : fname_receive,
         "last_name" : lname_receive,
@@ -107,7 +108,14 @@ def sign_up():
         "state_region" : ""
     }
     db.user_patient.insert_one(doc)
-    return jsonify({"result" : "success"})
+    return jsonify({"result" : "success", "exists" : exists})
+
+#CHECK EMAIL DUPLICATE ON SIGN UP
+@app.route("/sign_up/check_dup", methods=["POST"])
+def check_dup():
+    email_receive = request.form.get("email_give")
+    exists = bool(db.user_patient.find_one({"email" : email_receive}))
+    return jsonify({"result" : "success", "exists" : exists}) 
     
 @app.route("/login-doctor")
 def login_doctor():
