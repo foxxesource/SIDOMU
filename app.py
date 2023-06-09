@@ -220,14 +220,19 @@ def appointment_save():
     doctor_receive = request.form.get("doctor_give")
     email_receive = request.form.get("email_give")
     message_receive = request.form.get("message_give")
+    count = db.appointment_patient.count_documents({})
+    num = count + 1
     # exists = bool(db.user_patient.find_one({"email" : email_receive}))
     doc = {
+        "num" : num,
         "first_name" : fname_receive,
         "last_name" : lname_receive,
         "mobile_number" : mobilenumber_receive,
         "doctor" : doctor_receive,
         "email" : email_receive,
-        "message" : message_receive
+        "message" : message_receive,
+        "status" : 0,
+        "doc_message" : ""
     }
     db.appointment_patient.insert_one(doc)
     return jsonify({"result" : "success"})
@@ -331,7 +336,46 @@ def info_patient(email):
 #List patient Appointment with doctor
 @app.route("/appointment-doctor")
 def appointment_doctor():
-    return render_template("patient/appointment-doctor.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/appointment-doctor.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
+
+#get appointment from patient
+@app.route("/get_app", methods=["GET"])
+def get_app():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        email_receive = request.args.get("email_give")    
+        apps = list(db.appointment_patient.find({"email" : email_receive}, {"_id" : False}))
+        # if apps == list(db.appointment_patient.find_one({"doctor" : "Dr.Bintang Duinata"}, {"_id" : False})):
+        #     appoint = db.user_doctor.find_one({"legit_doctorname" : "Dr.Bintang Duinata"}, {"_id" : False})
+        # else :
+        #    appoint = db.user_doctor.find_one({"legit_doctorname" : "Dr.Kandias"}, {"_id" : False})
+        return jsonify({
+            "result" : "success",
+            "msg" : "successfully fetched all appointments",
+            "apps" : apps,
+            # "appoint" : appoint
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 #doctor page for patient navbar
 @app.route("/doctor-homepatient")

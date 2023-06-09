@@ -22,7 +22,113 @@
         }
     </style>
     <script>
+        $(document).ready(function () {
+            get_app("{{ user_info.email }}");
+        })
 
+        function get_app(email) {
+            if (email === undefined) {
+                email = ""
+            }
+            $("#app-box").empty();
+            $.ajax({
+                type: "GET",
+                url: `/get_app?email_give=${email}`,
+                data: {},
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        let apps = response["apps"];
+                        // let appoint = response["appoint"];
+                        for (let i = 0; i<apps.length; i++){
+                            let app = apps[i];
+                            let fname = apps[i]["first_name"];
+                            let lname = apps[i]["last_name"];
+                            let mobilenumber = apps[i]["mobile_number"];
+                            let doctor = apps[i]["doctor"];
+                            let email = apps[i]["email"];
+                            let message = apps[i]["message"];
+                            let status = apps[i]["status"];
+                            let docmessage = apps[i]["doc_message"]
+                            let html_temp = "";
+                            if (status == 0){
+                                html_temp = `
+                <div class="col-lg-4">
+                    <div class="position-relative mb-5">
+                        <div class="bg-white shadow-sm p-4 rounded-3">
+                            <div class="d-flex mb-3 align-items-center">
+                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
+                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
+                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                </div>
+                            </div>
+                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
+                            <p class="text-muted fw-light mb-2">Phone Number : ${mobilenumber}</p>
+                            <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>
+                            <p class="text-muted fw-light mb-2">Email : ${email}</p>
+                            <p class="text-muted fw-light mb-3">Message : ${message}</p>
+                            <h6 class="fw-bold mb-1">Status : Pending ⌛<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">(Please be patient!)</p>
+                        </div>
+                    </div>
+                </div>`;
+                            } else if(status == 1){
+                                html_temp = `
+                <div class="col-lg-4">
+                    <div class="position-relative mb-5">
+                        <div class="bg-white shadow-sm p-4 rounded-3">
+                            <div class="d-flex mb-3 align-items-center">
+                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
+                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
+                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                </div>
+                            </div>
+                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
+                            <p class="text-muted fw-light mb-2">Phone Number : ${mobilenumber}</p>
+                            <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>
+                            <p class="text-muted fw-light mb-2">Email : ${email}</p>
+                            <p class="text-muted fw-light mb-3">Message : ${message}</p>                            
+                            <h6 class="fw-bold mb-1">Status : Accepted ✔️<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">(${docmessage})</p>                           
+                        </div>
+                    </div>
+                </div>`;
+                            }else{
+                                html_temp = `
+                <div class="col-lg-4">
+                    <div class="position-relative mb-5">
+                        <div class="bg-white shadow-sm p-4 rounded-3">
+                            <div class="d-flex mb-3 align-items-center">
+                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
+                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
+                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                </div>
+                            </div>
+                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
+                            <p class="text-muted fw-light mb-2">Phone Number : ${mobilenumber}</p>
+                            <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>
+                            <p class="text-muted fw-light mb-2">Email : ${email}</p>
+                            <p class="text-muted fw-light mb-3">Message : ${message}</p>
+                            <h6 class="fw-bold mb-1">Status : Declined ❌<i class="small text-primary"></i></h6>
+                            <p class="text-muted fw-light mb-2">(${docmessage})</p>
+                        </div>
+                    </div>
+                </div>`;
+                            }    
+                            $("#app-box").append(html_temp)
+                        }
+                    }
+                }
+            })
+        }
     </script>
 </head>
 
@@ -47,10 +153,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata31@gmail.com
+                    <a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
+                            width="32" height="32" class="rounded-circle">
+                        {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -70,38 +176,11 @@
     </header>
     <section class="py-5">
         <div class="container px-5 mt-5">
-            <div class="row gx-5">
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">Name : Muhammad Kandias</p>
-                            <p class="text-muted fw-light mb-2">Phone Number : 089639640252</p>
-                            <p class="text-muted fw-light mb-2">Doctor : Dr.Bintang Duinata</p>
-                            <p class="text-muted fw-light mb-2">Email : kandias@gmail.com</p>
-                            <p class="text-muted fw-light mb-3">Message : I got great headache and the pain getting
-                                worse within 1 week</p>
-                            <h6 class="fw-bold mb-1">Status : Pending ⌛<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(Please be patient!)</p>
-                            <h6 class="fw-bold mb-1">Status : Accepted ✔️<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(Message from the doctor)</p>
-                            <h6 class="fw-bold mb-1">Status : Declined ❌<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(Message from the doctor)</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="row gx-5" id="app-box">
             </div>
         </div>
     </section>
-    <footer class="bg-dark py-4 mt-auto copyright-footer">
+    <footer class="bg-dark py-4 copyright-footer" style="margin-top: 150px;">
         <div class="container px-5">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                 <div class="col-auto">
