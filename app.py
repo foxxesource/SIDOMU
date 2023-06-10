@@ -384,12 +384,42 @@ def get_app():
 #doctor page for patient navbar
 @app.route("/doctor-homepatient")
 def doctor_homepatient():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/doctor-homepatient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
+
     return render_template("patient/doctor-homepatient.html")
 
 #doctor item page for patient navbar
 @app.route("/doctor-item-homepatient")
 def doctor_item_homepatient():
-    return render_template("patient/doctor-item-homepatient.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/doctor-item-homepatient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
 
 #blog page for patient navbar
 @app.route("/blog-homepatient", methods=["GET"])
@@ -413,7 +443,21 @@ def blog_homepatient():
 #blog item page for patient navbar
 @app.route("/blog-post-homepatient")
 def blog_post_homepatient():
-    return render_template("patient/blog-post-homepatient.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        return render_template("patient/blog-post-homepatient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
 
 #home page for doctor
 @app.route("/home-doctor")
