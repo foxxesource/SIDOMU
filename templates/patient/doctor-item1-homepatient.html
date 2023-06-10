@@ -44,10 +44,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata31@gmail.com
+                    <a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}"
+                            alt="profilepic" width="32" height="32" class="rounded-circle">
+                        {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -76,36 +76,36 @@
                                 <img class="card-img-top" src="static/img/d-profile.jpg">
                                 <div class="p-4">
                                     <div>
-                                        <h5 class="fw-bold mb-1 text-white">Bintang Duinata</h5>
-                                        <p class="mb-0 text-white-50">Gynecology, Health Care &amp; Obstetrics</p>
+                                        <h5 class="fw-bold mb-1 text-white">{{ doct1_info.first_name }} {{ doct1_info.last_name }}</h5>
+                                        <p class="mb-0 text-white-50">{{ doct1_info.specialist }}</p>
                                     </div>
                                 </div>
                                 <div class="p-4 border-top border-50">
                                     <div class="d-flex gap-3 pb-1 text-white">
                                         <i class="bi bi-telephone m-0"></i>
                                         <div>
-                                            <p class="mb-1 text-white">(+62) 896 3964 0252</p>
+                                            <p class="mb-1 text-white">{{ doct1_info.phone_number }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 pb-1 text-white">
                                         <i class="bi bi-envelope m-0"></i>
                                         <div>
-                                            <p class="mb-1 text-white">bintang@gmail.com</p>
+                                            <p class="mb-1 text-white">{{ doct1_info.email }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3 pb-0 text-white">
                                         <i class="bi bi-geo-alt m-0"></i>
                                         <div>
-                                            <p class="mb-1 text-white">Graha Raya, Tangerang, Jakarta</p>
+                                            <p class="mb-1 text-white">{{ doct1_info.address_stateregion }}, {{ doct1_info.address_country }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div
                                     class="d-flex align-items-center justify-content-between border-top border-50 py-4 px-5">
-                                    <a class="px-2 text-white" href="#!"><i class="bi-twitter"></i></a>
-                                    <a class="px-2 text-white" href="#!"><i class="bi-facebook"></i></a>
-                                    <a class="px-2 text-white" href="#!"><i class="bi-linkedin"></i></a>
-                                    <a class="px-2 text-white" href="#!"><i class="bi-youtube"></i></a>
+                                    <a class="px-2 text-white" href="{{ doct1_info.twitter }}"><i class="bi-twitter"></i></a>
+                                    <a class="px-2 text-white" href="{{ doct1_info.facebook }}"><i class="bi-facebook"></i></a>
+                                    <a class="px-2 text-white" href="{{ doct1_info.linkedin }}"><i class="bi-linkedin"></i></a>
+                                    <a class="px-2 text-white" href="{{ doct1_info.youtube }}"><i class="bi-youtube"></i></a>
                                 </div>
                             </div>
                             <a href="/appointment"
@@ -115,18 +115,9 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <h2 class="mb-1 fw-bold" style="color: #0d47a1;">Dr. Bintang Duinata</h2>
+                    <h2 class="mb-1 fw-bold" style="color: #0d47a1;">Dr. {{ doct1_info.first_name }} {{ doct1_info.last_name }}</h2>
                     <p class="lead mb-3">Rumah Sakit Premiere – Jakarta</p>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur excepteur sint occaecat cupidatat non proident. </p>
-                    <p class="mb-4">
-                        It is a long established fact that a reader will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution of letters, as opposed to using 'Content here, content here', making it look like
-                        readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as
-                        their default model text.
-                    </p>
+                    <p>{{ doct1_info.additional_details }}</p>
                     <h3 class="mb-3 h5">Education</h3>
                     <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
                         <table class="table table-borderless m-0">
@@ -139,14 +130,14 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-muted">2006</td>
-                                    <td class="text-muted">MBBS, M.D</td>
-                                    <td class="text-muted">University of London</td>
+                                    <td class="text-muted">{{ doct1_info.education_year }}</td>
+                                    <td class="text-muted">{{ doct1_info.education_degree }}</td>
+                                    <td class="text-muted">{{ doct1_info.education_institute }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted">2010</td>
-                                    <td class="text-muted">M.D. of Medicine</td>
-                                    <td class="text-muted">Australia Medical College</td>
+                                    <td class="text-muted">{{ doct1_info.education2_year }}</td>
+                                    <td class="text-muted">{{ doct1_info.education2_degree }}</td>
+                                    <td class="text-muted">{{ doct1_info.education2_institute }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -164,16 +155,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="text-muted">2007 - 2008</td>
-                                    <td class="text-muted">MBBS, M.D</td>
-                                    <td class="text-muted">Senior Prof.</td>
-                                    <td class="text-muted">ProHealth Medical Clinic</td>
+                                    <td class="text-muted">{{ doct1_info.experience_year }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience_department }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience_position }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience_hospital }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="text-muted">2010 - 2018</td>
-                                    <td class="text-muted">M.D. of Medicine</td>
-                                    <td class="text-muted">Associate Prof.</td>
-                                    <td class="text-muted">Australia Medical College</td>
+                                    <td class="text-muted">{{ doct1_info.experience2_year }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience2_department }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience2_position }}</td>
+                                    <td class="text-muted">{{ doct1_info.experience2_hospital }}</td>
                                 </tr>
                             </tbody>
                         </table>

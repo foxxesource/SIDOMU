@@ -365,7 +365,6 @@ def get_app():
         )
         email_receive = request.args.get("email_give")    
         apps = list(db.appointment_patient.find({"email" : email_receive}, {"_id" : False}))
-        email = db.user_patient.find_one({"email" : payload.get("id")})
         for app in apps:
             data2 = db.user_doctor.find_one({"legit_doctorname" : app["doctor"]})
             app["doctor_firstName"] = data2["first_name"]
@@ -399,11 +398,28 @@ def doctor_homepatient():
     except jwt.exceptions.DecodeError:
         msg = "There was a problem logging your in"
         return redirect(url_for("home",msg=msg))
+    
+#get doctor data from database
+@app.route("/get_doctor", methods=["GET"])
+def get_doctor():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        doc_info = list(db.user_doctor.find({}, {"_id" : False}))
+        return jsonify({
+            "result" : "success",
+            "msg" : "successfully fetched all doctors",
+            "doc_info" : doc_info,
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
-    return render_template("patient/doctor-homepatient.html")
-
-#doctor item page for patient navbar
-@app.route("/doctor-item-homepatient")
+#doctor item1 page for patient navbar
+@app.route("/doctor-item1-homepatient")
 def doctor_item_homepatient():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -413,7 +429,9 @@ def doctor_item_homepatient():
             algorithms=["HS256"]
         )
         user_info = db.user_patient.find_one({"email" : payload.get("id")})
-        return render_template("patient/doctor-item-homepatient.html", user_info = user_info)
+        doct1_info = db.user_doctor.find_one({"email" : "bintang.duinata311@gmail.com"})
+        return render_template("patient/doctor-item1-homepatient.html", user_info = user_info
+                                                                      , doct1_info = doct1_info)
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
         return redirect(url_for("home",msg=msg))
