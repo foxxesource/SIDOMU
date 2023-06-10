@@ -49,6 +49,10 @@
                             let message = apps[i]["message"];
                             let status = apps[i]["status"];
                             let docmessage = apps[i]["doc_message"]
+                            let docfname = apps[i]["doctor_firstName"]
+                            let doclname = apps[i]["doctor_lastName"]
+                            let specialist = apps[i]["doctor_specialist"]
+                            let docpfp = apps[i]["doctor_profilePicture"]
                             let html_temp = "";
                             if (status == 0){
                                 html_temp = `
@@ -56,11 +60,10 @@
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
                             <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <img class="image rounded-circle" style="width:64px; height:64px;" src="/static/${docpfp}" alt="...">
                                 <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                    <h5 class="fw-bold mb-1">Dr. ${docfname} ${doclname}</h5>
+                                    <p class="fw-light mb-0 text-muted small">${specialist}</p>
                                 </div>
                             </div>
                             <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
@@ -80,11 +83,10 @@
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
                             <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <img class="image rounded-circle" style="width:64px; height:64px;" src="/static/${docpfp}" alt="...">
                                 <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                    <h5 class="fw-bold mb-1">Dr. ${docfname} ${doclname}</h5>
+                                    <p class="fw-light mb-0 text-muted small">${specialist}</p>
                                 </div>
                             </div>
                             <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
@@ -94,7 +96,7 @@
                             <p class="text-muted fw-light mb-2">Email : ${email}</p>
                             <p class="text-muted fw-light mb-3">Message : ${message}</p>                            
                             <h6 class="fw-bold mb-1">Status : Accepted ✔️<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(${docmessage})</p>                           
+                            <p class="text-muted fw-light mb-2">(message : ${docmessage})</p>                           
                         </div>
                     </div>
                 </div>`;
@@ -104,11 +106,10 @@
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
                             <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
+                                <img class="image rounded-circle" style="width:64px; height:64px;" src="/static/${docpfp}" alt="...">
                                 <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
+                                    <h5 class="fw-bold mb-1">Dr. ${docfname} ${doclname}</h5>
+                                    <p class="fw-light mb-0 text-muted small">${specialist}</p>
                                 </div>
                             </div>
                             <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
@@ -118,7 +119,7 @@
                             <p class="text-muted fw-light mb-2">Email : ${email}</p>
                             <p class="text-muted fw-light mb-3">Message : ${message}</p>
                             <h6 class="fw-bold mb-1">Status : Declined ❌<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(${docmessage})</p>
+                            <p class="text-muted fw-light mb-2">(message : ${docmessage})</p>
                         </div>
                     </div>
                 </div>`;
@@ -176,7 +177,7 @@
     </header>
     <section class="py-5">
         <div class="container px-5 mt-5">
-            <div class="row gx-5" id="app-box">
+            <div class="row gx-3" id="app-box">
             </div>
         </div>
     </section>

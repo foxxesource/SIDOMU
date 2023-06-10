@@ -344,7 +344,8 @@ def appointment_doctor():
             algorithms=["HS256"]
         )
         user_info = db.user_patient.find_one({"email" : payload.get("id")})
-        return render_template("patient/appointment-doctor.html", user_info = user_info)
+        return render_template("patient/appointment-doctor.html", user_info = user_info
+                                                                )
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
         return redirect(url_for("home",msg=msg))
@@ -364,15 +365,18 @@ def get_app():
         )
         email_receive = request.args.get("email_give")    
         apps = list(db.appointment_patient.find({"email" : email_receive}, {"_id" : False}))
-        # if apps == list(db.appointment_patient.find_one({"doctor" : "Dr.Bintang Duinata"}, {"_id" : False})):
-        #     appoint = db.user_doctor.find_one({"legit_doctorname" : "Dr.Bintang Duinata"}, {"_id" : False})
-        # else :
-        #    appoint = db.user_doctor.find_one({"legit_doctorname" : "Dr.Kandias"}, {"_id" : False})
+        email = db.user_patient.find_one({"email" : payload.get("id")})
+        for app in apps:
+            data2 = db.user_doctor.find_one({"legit_doctorname" : app["doctor"]})
+            app["doctor_firstName"] = data2["first_name"]
+            app["doctor_lastName"] = data2["last_name"]
+            app["doctor_specialist"] = data2["specialist"]
+            app["doctor_profilePicture"] = data2["profile_pic_real"]
+
         return jsonify({
             "result" : "success",
             "msg" : "successfully fetched all appointments",
             "apps" : apps,
-            # "appoint" : appoint
         })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
