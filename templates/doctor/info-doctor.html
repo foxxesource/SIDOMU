@@ -65,10 +65,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata@gmail.com
+                    <a href="/info-doctor/{{ user_info.email }}" class="nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}"
+                            alt="profilepic" width="32" height="32" class="rounded-circle">
+                       Dr. {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -91,9 +91,9 @@
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
                         width="150px"
-                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
-                        class="font-weight-bold">Bintang Duinata</span><span
-                        class="text-black-50">bintang.duinata31@gmail.com</span><span> </span></div>
+                        src="/static/{{ user_info.profile_pic_real }}"><span
+                        class="font-weight-bold">{{ user_info.first_name }} {{ user_info.last_name }}</span><span
+                        class="text-black-50">{{ user_info.email }}</span><span> </span></div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
@@ -103,24 +103,24 @@
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">First Name</label>
                             <p>
-                                Bintang
+                                {{ user_info.first_name }}
                             </p>
                         </div>
                         <div class="col-md-6"><label class="labels">Last Name</label>
                             <p>
-                                Duinata
+                                {{ user_info.last_name }}
                             </p>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6"><label class="labels">Mobile Number</label>
                             <p>
-                                0812-1234-5678
+                                {{ user_info.phone_number }}
                             </p>
                         </div>
                         <div class="col-md-6"><label class="labels">Specialist</label>
                             <p>
-                                Gynecology, Health Care & Obstetrics
+                                {{ user_info.specialist }}
                             </p>
                         </div>
                     </div>
@@ -129,32 +129,32 @@
                         </div>
                         <div class="col-md-4"><label class="labels">Year</label>
                             <p>
-                                2006
+                                {{ user_info.education_year }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Degree</label>
                             <p>
-                                MBBS, M.D
+                                {{ user_info.education_degree }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Institute</label>
                             <p>
-                                University Of London
+                                {{ user_info.education_institute }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Year</label>
                             <p>
-                                2010
+                                {{ user_info.education2_year }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Degree</label>
                             <p>
-                                M.D. of Medicine
+                                {{ user_info.education2_degree }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Institute</label>
                             <p>
-                                Australia Medical College
+                                {{ user_info.education2_institute }}
                             </p>
                         </div>
                     </div>
@@ -163,42 +163,42 @@
                         </div>
                         <div class="col-md-3"><label class="labels">Year</label>
                             <p>
-                                2006 - 2008
+                                {{ user_info.experience_year }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Department</label>
                             <p>
-                                MBBS, M.D
+                                {{ user_info.experience_department }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Position</label>
                             <p>
-                                Senior Prof.
+                                {{ user_info.experience_position }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Hospital</label>
                             <p>
-                                ProHealth Medical Clinic
+                                {{ user_info.experience_hospital }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Year</label>
                             <p>
-                                2010 - 2018
+                                {{ user_info.experience2_hospital }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Department</label>
                             <p>
-                                M.D. of Medicine
+                                {{ user_info.experience2_department }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Position</label>
                             <p>
-                                Associate Prof.
+                                {{ user_info.experience2_position }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Hospital</label>
                             <p>
-                                Australia Medical College
+                                {{ user_info.experience2_hospital }}
                             </p>
                         </div>
                     </div>
@@ -207,12 +207,12 @@
                         </div>
                         <div class="col-md-6"><label class="labels">Country</label>
                             <p>
-                                Indonesia
+                                {{ user_info.address_country }}
                             </p>
                         </div>
                         <div class="col-md-6"><label class="labels">State/Region</label>
                             <p>
-                                Jakarta
+                                {{ user_info.address_stateregion }}
                             </p>
                         </div>
                         <div class="mt-5 text-center"><button class="btn btn-danger" type="button">Log
@@ -228,17 +228,33 @@
                     </div><br>
                     <div class="col-md-12"><label class="labels">Additional Details</label>
                         <p>
-                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                            dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident.
-
-                            It is a long established fact that a reader will be distracted by the readable content of a
-                            page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                            more-or-less normal distribution of letters, as opposed to using 'Content here, content
-                            here', making it look like readable English. Many desktop publishing packages and web page
-                            editors now use Lorem Ipsum as their default model text.
+                            {{ user_info.additional_details }}
                         </p>
-                    </div> <br>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="fw-bold">Social Link</label>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Twitter</label>
+                            <p>
+                                {{ user_info.twitter }}
+                            </p>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Facebook</label>
+                            <p>
+                                {{ user_info.facebook }}
+                            </p>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Linkedin</label>
+                            <p>
+                                {{ user_info.linkedin }}
+                            </p>
+                        </div>
+                        <div class="col-md-6"><label class="labels">Youtube</label>
+                            <p>
+                                {{ user_info.youtube }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

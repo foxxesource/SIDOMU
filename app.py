@@ -485,9 +485,10 @@ def home_doctor():
         payload = jwt.decode(
             token_receive,
             SECRET_KEY,
+            algorithms=["HS256"]
         )
         user_info = db.user_doctor.find_one({"email" : payload.get("id")})
-        return render_template("patient/home-doctor.html", user_info = user_info)
+        return render_template("doctor/home-doctor.html", user_info = user_info)
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
         return redirect(url_for("login_doctor",msg=msg))
@@ -503,7 +504,21 @@ def appointment_patient():
 #User info for doctor
 @app.route("/info-doctor")
 def info_doctor():
-    return render_template("doctor/info-doctor.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        return render_template("doctor/info-doctor.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login_doctor",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login_doctor",msg=msg))
 
 #User edit for doctor
 @app.route("/edit-doctor")
