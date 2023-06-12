@@ -25,7 +25,9 @@ db = client[DB_NAME]
 
 SECRET_KEY = "BINTANGSAH123"
 
-TOKEN_KEY= "mytoken"
+TOKEN_KEY = "mytoken"
+
+TOKEN_KEY2 = "mytoken2"
 
 @app.route("/")
 def home():
@@ -480,7 +482,7 @@ def blog_post_homepatient():
 #home page for doctor
 @app.route("/home-doctor")
 def home_doctor():
-    token_receive = request.cookies.get(TOKEN_KEY)
+    token_receive = request.cookies.get(TOKEN_KEY2)
     try:
         payload = jwt.decode(
             token_receive,
@@ -504,7 +506,7 @@ def appointment_patient():
 #User info for doctor
 @app.route("/info-doctor")
 def info_doctor():
-    token_receive = request.cookies.get(TOKEN_KEY)
+    token_receive = request.cookies.get(TOKEN_KEY2)
     try:
         payload = jwt.decode(
             token_receive,
