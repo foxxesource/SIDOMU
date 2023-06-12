@@ -43,7 +43,42 @@
         }
     </style>
     <script>
+        function edit_profile() {
+            let mobile_number = $("#input-mobilenumber").val();
+            let country = $("#input-country").val();
+            let state_region = $("#input-stateregion").val();
+            let twitter = $("#input-twitter").val();
+            let facebook = $("#input-facebook").val();
+            let linkedin = $("#input-linkedin").val();
+            let youtube = $("#input-youtube").val();
+            let additional_details = $("#input-additionaldetails").val();
+            let form_data = new FormData();
+            let file = $("#input-pic")[0].files[0];
+            form_data.append("file_give", file);
+            form_data.append("mobilenumber_give", mobile_number);
+            form_data.append("country_give", country);
+            form_data.append("stateregion_give", state_region);
+            form_data.append("twitter_give", twitter);
+            form_data.append("facebook_give", facebook);
+            form_data.append("linkedin_give", linkedin);
+            form_data.append("youtube_give", youtube);
+            form_data.append("additionaldetails_give", additional_details);
+            $.ajax({
+                type: "POST",
+                url: "/update_docprofile",
+                data: form_data,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert(response["msg"]);
+                        window.location.href = "/info-doctor";
+                    }
+                }
+            })
 
+        }
     </script>
 </head>
 
@@ -65,10 +100,10 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="#" class="nav-link px-2 text-white">
-                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-                            alt="mdo" width="32" height="32" class="rounded-circle">
-                        bintang.duinata@gmail.com
+                    <a href="/info-doctor/{{ user_info.email }}" class="image nav-link px-2 text-white">
+                        <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
+                            style="width:32px; height:32px;" class="rounded-circle">
+                        Dr. {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
             </div>
@@ -89,32 +124,36 @@
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                        width="150px"
-                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span
-                        class="font-weight-bold">Bintang Duinata</span><span
-                        class="text-black-50">bintang.duinata31@gmail.com</span><span> </span></div>
+                <div class="image d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                        style="width:150px; height:150px;"  src="/static/{{ user_info.profile_pic_real }}"><span class="font-weight-bold">{{
+                        user_info.first_name }} {{ user_info.last_name }}</span><span class="text-black-50">{{
+                        user_info.email }}</span><span> </span></div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Setting</h4>
+                        <h4 class="text-right">Profile Settings</h4>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">First Name</label>
-                            <input type="text" class="form-control" placeholder="First Name" value="">
+                            <p>
+                                {{ user_info.first_name }}
+                            </p>
                         </div>
                         <div class="col-md-6"><label class="labels">Last Name</label>
-                            <input type="text" class="form-control" placeholder="Last Name" value="">
+                            <p>
+                                {{ user_info.last_name }}
+                            </p>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6"><label class="labels">Mobile Number</label>
-                            <input type="text" class="form-control" placeholder="Mobile Number" value="">
+                            <input type="number" id="input-mobilenumber" class="form-control" placeholder="mobilenumber"
+                                value="{{ user_info.phone_number }}">
                         </div>
                         <div class="col-md-6"><label class="labels">Specialist</label>
                             <p>
-                                Gynecology, Health Care & Obstetrics
+                                {{ user_info.specialist }}
                             </p>
                         </div>
                     </div>
@@ -123,32 +162,32 @@
                         </div>
                         <div class="col-md-4"><label class="labels">Year</label>
                             <p>
-                                2006
+                                {{ user_info.education_year }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Degree</label>
                             <p>
-                                MBBS, M.D
+                                {{ user_info.education_degree }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Institute</label>
                             <p>
-                                University Of London
+                                {{ user_info.education_institute }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Year</label>
                             <p>
-                                2010
+                                {{ user_info.education2_year }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Degree</label>
                             <p>
-                                M.D. of Medicine
+                                {{ user_info.education2_degree }}
                             </p>
                         </div>
                         <div class="col-md-4"><label class="labels">Institute</label>
                             <p>
-                                Australia Medical College
+                                {{ user_info.education2_institute }}
                             </p>
                         </div>
                     </div>
@@ -157,42 +196,42 @@
                         </div>
                         <div class="col-md-3"><label class="labels">Year</label>
                             <p>
-                                2006 - 2008
+                                {{ user_info.experience_year }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Department</label>
                             <p>
-                                MBBS, M.D
+                                {{ user_info.experience_department }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Position</label>
                             <p>
-                                Senior Prof.
+                                {{ user_info.experience_position }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Hospital</label>
                             <p>
-                                ProHealth Medical Clinic
+                                {{ user_info.experience_hospital }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Year</label>
                             <p>
-                                2010 - 2018
+                                {{ user_info.experience2_hospital }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Department</label>
                             <p>
-                                M.D. of Medicine
+                                {{ user_info.experience2_department }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Position</label>
                             <p>
-                                Associate Prof.
+                                {{ user_info.experience2_position }}
                             </p>
                         </div>
                         <div class="col-md-3"><label class="labels">Hospital</label>
                             <p>
-                                Australia Medical College
+                                {{ user_info.experience2_hospital }}
                             </p>
                         </div>
                     </div>
@@ -200,24 +239,49 @@
                         <div class="col-md-12"><label class="labels fw-bold">Address</label>
                         </div>
                         <div class="col-md-6"><label class="labels">Country</label>
-                            <input type="text" class="form-control" placeholder="Country" value="">
+                            <input type="text" id="input-country" class="form-control" placeholder="Country"
+                                value="{{ user_info.address_country }}">
                         </div>
                         <div class="col-md-6"><label class="labels">State/Region</label>
-                            <input type="text" class="form-control" placeholder="State" value="">
+                            <input type="text" id="input-stateregion" class="form-control" placeholder="State"
+                                value="{{ user_info.address_stateregion }}">
                         </div>
-                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                                onclick="edit_profile()" type="button">Save
                                 Profile</button></div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                            Picture</span><span class="border px-3 p-1 add-experience"><i
-                                class="fa fa-plus"></i>&nbsp;Profile Picture</span></div><br>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Edit Picture</label>
+                        <input class="form-control" type="file" id="input-pic">
+                    </div>
                     <div class="col-md-12"><label class="labels">Additional Details</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="input-additionaldetails"
+                            rows="3">{{ user_info.additional_details }}</textarea>
                     </div> <br>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels fw-bold">Social Link</label>
+                    </div>
+                    <div class="col-md-6"><label class="labels">Twitter</label>
+                        <input type="text" id="input-twitter" class="form-control" placeholder="twitter"
+                            value="{{ user_info.twitter }}">
+                    </div>
+                    <div class="col-md-6"><label class="labels">Facebook</label>
+                        <input type="text" id="input-facebook" class="form-control" placeholder="facebook"
+                            value="{{ user_info.facebook }}">
+                    </div>
+                    <div class="col-md-6"><label class="labels">Linkedin</label>
+                        <input type="text" id="input-linkedin" class="form-control" placeholder="linkedin"
+                            value="{{ user_info.linkedin }}">
+                    </div>
+                    <div class="col-md-6"><label class="labels">Youtube</label>
+                        <input type="text" id="input-youtube" class="form-control" placeholder="Country"
+                            value="{{ user_info.youtube }}">
+                    </div>
                 </div>
             </div>
         </div>

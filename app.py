@@ -525,7 +525,75 @@ def info_doctor():
 #User edit for doctor
 @app.route("/edit-doctor")
 def user_doctor():
-    return render_template("doctor/user-doctor.html")
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        return render_template("doctor/user-doctor.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login_doctor",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login_doctor",msg=msg))
+
+#doctor server edit
+@app.route("/update_docprofile", methods=["POST"])
+def update_docprofile():
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        email = payload.get("id")
+        mobilenumber_receive = request.form.get("mobilenumber_give")
+        country_receive = request.form.get("country_give")
+        stateregion_receive = request.form.get("stateregion_give")
+        twitter_receive = request.form.get("twitter_give")
+        facebook_receive = request.form.get("facebook_give")
+        linkedin_receive = request.form.get("linkedin_give")
+        youtube_receive = request.form.get("youtube_give")
+        additionaldetails_receive = request.form.get("additionaldetails_give")
+        new_doc = {
+            "phone_number" : mobilenumber_receive,
+            "address_country" : country_receive,
+            "address_stateregion" : stateregion_receive,
+            "twitter" : twitter_receive,
+            "facebook" : facebook_receive,
+            "linkedin" : linkedin_receive,
+            "youtube" : youtube_receive,
+            "additional_details" : additionaldetails_receive,
+        }
+        
+        if "file_give" in request.files:
+            file = request.files.get("file_give")
+            filename = secure_filename(file.filename)
+            extension = filename.split(".")[-1]
+            file_path = f"profile_pics/{email}.{extension}"
+            file.save("./static/" + file_path)
+            new_doc["profile_pic"] = filename
+            new_doc["profile_pic_real"] = file_path
+
+        db.user_doctor.update_one(
+            {"email" : email},
+            {"$set" : new_doc}
+        )
+        # db.posts.update_one(
+        #     {"email" : email},
+        #     {"$set" : new_doc}
+        # )
+        return jsonify({
+            "result" : "success",
+            "msg" : "Your profile has been updated"
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

@@ -70,9 +70,9 @@
                 </ul>
 
                 <div class="text-end">
-                    <a href="/info-doctor/{{ user_info.email }}" class="nav-link px-2 text-white">
+                    <a href="/info-doctor/{{ user_info.email }}" class="image nav-link px-2 text-white">
                         <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
-                            width="32" height="32" class="rounded-circle">
+                            style="width:32px; height:32px;" class="rounded-circle">
                         Dr. {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
@@ -94,10 +94,10 @@
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
             <div class="col-md-3 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
-                        width="150px" src="/static/{{ user_info.profile_pic_real }}"><span class="font-weight-bold">{{
-                        user_info.first_name }} {{ user_info.last_name }}</span><span class="text-black-50">{{
-                        user_info.email }}</span><span> </span></div>
+                <div class="image d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
+                    style="width:150px; height:150px;"  src="/static/{{ user_info.profile_pic_real }}"><span class="font-weight-bold">{{
+                    user_info.first_name }} {{ user_info.last_name }}</span><span class="text-black-50">{{
+                    user_info.email }}</span><span> </span></div>
             </div>
             <div class="col-md-5 border-right">
                 <div class="p-3 py-5">
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="fw-bold">Education</label>
+                        <div class="col-md-12"><label class="labels fw-bold">Education</label>
                         </div>
                         <div class="col-md-4"><label class="labels">Year</label>
                             <p>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="fw-bold">Experience</label>
+                        <div class="col-md-12"><label class="labels fw-bold">Experience</label>
                         </div>
                         <div class="col-md-3"><label class="labels">Year</label>
                             <p>
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="fw-bold">Address</label>
+                        <div class="col-md-12"><label class="labels fw-bold">Address</label>
                         </div>
                         <div class="col-md-6"><label class="labels">Country</label>
                             <p>
@@ -237,7 +237,7 @@
                         </p>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="fw-bold">Social Link</label>
+                        <div class="col-md-12"><label class="labels fw-bold">Social Link</label>
                         </div>
                         <div class="col-md-6"><label class="labels">Twitter</label>
                             <p>
