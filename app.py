@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 from pymongo import MongoClient
 import jwt
+import certifi
 # pip install PyJWT==1.7.0
 from dotenv import load_dotenv
 import os
@@ -20,7 +21,7 @@ app.config["UPLOAD_FOLDER"] = "./static/profile_pics"
 MONGODB_URL = os.environ.get("MONGODB_URL")
 DB_NAME = os.environ.get("DB_NAME")
 
-client = MongoClient(MONGODB_URL)
+client = MongoClient(MONGODB_URL,  tlsCAFile=certifi.where() )
 db = client[DB_NAME]
 
 SECRET_KEY = "BINTANGSAH123"
@@ -433,6 +434,46 @@ def doctor_item_homepatient():
         user_info = db.user_patient.find_one({"email" : payload.get("id")})
         doct1_info = db.user_doctor.find_one({"email" : "bintang.duinata311@gmail.com"})
         return render_template("patient/doctor-item1-homepatient.html", user_info = user_info
+                                                                      , doct1_info = doct1_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
+    
+@app.route("/doctor-item2-homepatient")
+def doctor_item2_homepatient():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        doct1_info = db.user_doctor.find_one({"email" : "drRizkiKandias@gmail.com"})
+        return render_template("patient/doctor-item2-homepatient.html", user_info = user_info
+                                                                      , doct1_info = doct1_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("home",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("home",msg=msg))
+    
+@app.route("/doctor-item3-homepatient")
+def doctor_item3_homepatient():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        doct1_info = db.user_doctor.find_one({"email" : "drSriRaihanPutri@gmail.com"})
+        return render_template("patient/doctor-item3-homepatient.html", user_info = user_info
                                                                       , doct1_info = doct1_info)
     except jwt.ExpiredSignatureError:
         msg = "Your token has expired"
