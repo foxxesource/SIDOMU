@@ -613,7 +613,7 @@ def get_app_patient():
         email_receive = request.args.get("email_give")    
         apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}))
         for app in apps:
-            data2 = db.appointment_patient.find_one({"doc_email" : app["doc_email"]})
+            data2 = db.appointment_patient.find_one({"num" : app["num"]})
             app["appointment_num"] = data2["num"]
             app["appointment_firstName"] = data2["first_name"]
             app["appointment_lastName"] = data2["last_name"]
@@ -628,7 +628,7 @@ def get_app_patient():
             app["appointment_timeEnd"] = data2["timeend_app"]
         
         for app2 in apps:
-            data3 = db.user_patient.find_one({"first_name" : data2["first_name"]})
+            data3 = db.user_patient.find_one({"email" : app2["email"]})
             app2["patient_firstName"] = data3["first_name"]
             app2["patient_lastName"] = data3["last_name"]
             app2["patient_country"] = data3["country"]
