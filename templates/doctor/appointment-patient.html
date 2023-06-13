@@ -97,7 +97,7 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <div class="input-group">
-                                                    <textarea id ="input-message" class="form-control"
+                                                    <textarea id="input-message" class="form-control"
                                                         aria-label="With textarea" placeholder="Type your message here!"></textarea>                                                    
                                                 </div>
                                                 <div class="modal-body">
@@ -142,14 +142,14 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <div class="input-group">
-                                                    <textarea class="form-control"
-                                                        aria-label="With textarea"></textarea>
+                                                    <textarea id="input-cancel-message" class="form-control"
+                                                        aria-label="With textarea" placeholder="Input your message here!"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="/login"><button type="button"
-                                                    class="btn btn-primary"><i></i>Confirm</button></a>
+                                            <button onclick ="cancel_app(${num})" type="button"
+                                                    class="btn btn-primary">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
                             <p class="text-muted fw-light mb-2">Email : ${email}</p>
                             <p class="text-muted fw-light mb-3">Message : ${message}</p>    
                             <h6 class="fw-bold mt-3">Status : Accepted ✔️</h6>
-                            <p class="text-muted fw-light mb-2">(Message: ${doc_message}, Date : ${date}, Time : ${time1} - ${time2})</p>
+                            <p class="text-muted fw-light mb-2">(Message: ${doc_message}. Date : ${date}. Time : ${time1} - ${time2})</p>
                         </div>
                     </div>
                 </div>`;
@@ -234,8 +234,22 @@
             })
         }
 
-        function cancel_app(){
-            
+        function cancel_app(num){
+            let message = $("#input-cancel-message").val();
+            $.ajax({
+                type : "POST",
+                url : "/cancel_appointment",
+                data : {num_give : num,
+                        message_give : message,
+                },
+                success : function (response) {
+                    if (response["result"] === "success"){
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                }
+            })
+
         }
 
     </script>

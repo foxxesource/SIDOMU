@@ -649,15 +649,44 @@ def update_appointment():
             "date_app" : date_receive,
             "timestart_app" : time1_receive,
             "timeend_app" : time2_receive,
+            "status" : 1
         }
 
         db.appointment_patient.update_one(
             {"num" : int(num_receive)},
-            {"$set" : new_doc},
+            {"$set" : new_doc}
         )
         return jsonify({
             "result" : "success",
             "msg" : "Appointment Accepted"
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+#cancel appointment from doctor
+@app.route("/cancel_appointment", methods=["POST"])
+def cancel_appointment():
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        message_receive = request.form.get("message_give")
+        num_receive = request.form.get("num_give")
+        new_doc = {
+            "doc_message" : message_receive,
+            "status" : 3
+        }
+
+        db.appointment_patient.update_one(
+            {"num" : int(num_receive)},
+            {"$set" : new_doc}
+        )
+        return jsonify({
+            "result" : "success",
+            "msg" : "Appointment Declined"
         })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
