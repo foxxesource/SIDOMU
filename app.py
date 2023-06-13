@@ -538,24 +538,6 @@ def hospitals_homepatient():
     except jwt.exceptions.DecodeError:
         msg = "There was a problem logging your in"
         return redirect(url_for("home",msg=msg))
-
-@app.route("/about-homepatient")
-def about_homepatient():
-    token_receive = request.cookies.get(TOKEN_KEY)
-    try:
-        payload = jwt.decode(
-            token_receive,
-            SECRET_KEY,
-            algorithms=["HS256"]
-        )
-        user_info = db.user_patient.find_one({"email" : payload.get("id")})
-        return render_template("patient/about-homepatient.html", user_info = user_info)
-    except jwt.ExpiredSignatureError:
-        msg = "Your token has expired"
-        return redirect(url_for("home",msg=msg))
-    except jwt.exceptions.DecodeError:
-        msg = "There was a problem logging your in"
-        return redirect(url_for("home",msg=msg))
     
 @app.route("/hospitals-item-homepatient")
 def hospitals_item_homepatient():
