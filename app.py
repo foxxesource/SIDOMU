@@ -612,33 +612,52 @@ def get_app_patient():
         )
         email_receive = request.args.get("email_give")    
         apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}))
-        for app in apps:
-            data2 = db.appointment_patient.find_one({"num" : app["num"]})
-            app["appointment_num"] = data2["num"]
-            app["appointment_firstName"] = data2["first_name"]
-            app["appointment_lastName"] = data2["last_name"]
-            app["appointment_phoneNumber"] = data2["mobile_number"]
-            app["appointment_doctor"] = data2["doctor"]
-            app["appointment_email"] = data2["email"]
-            app["appointment_message"] = data2["message"]
-            app["appointment_status"] = data2["status"]
-            app["appointment_docmessage"] = data2["doc_message"]
-            app["appointment_date"] = data2["date_app"]
-            app["appointment_timeStart"] = data2["timestart_app"]
-            app["appointment_timeEnd"] = data2["timeend_app"]
         
-        for app2 in apps:
-            data3 = db.user_patient.find_one({"email" : app2["email"]})
-            app2["patient_firstName"] = data3["first_name"]
-            app2["patient_lastName"] = data3["last_name"]
-            app2["patient_country"] = data3["country"]
-            app2["patient_stateRegion"] = data3["state_region"]
-            app2["patient_pfp"] = data3["profile_pic_real"]
+        for app in apps:
+            data2 = db.user_patient.find_one({"email" : app["email"]})
+            app["patient_firstName"] = data2["first_name"]
+            app["patient_lastName"] = data2["last_name"]
+            app["patient_country"] = data2["country"]
+            app["patient_stateRegion"] = data2["state_region"]
+            app["patient_pfp"] = data2["profile_pic_real"]
 
         return jsonify({
             "result" : "success",
             "msg" : "successfully fetched all appointments",
             "apps" : apps,
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+#accept appointment from doctor
+@app.route("/update_appointment", methods=["POST"])
+def update_appointment():
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        message_receive = request.form.get("message_give")
+        date_receive = request.form.get("date_give")
+        time1_receive = request.form.get("time1_give")
+        time2_receive = request.form.get("time2_give")
+        num_receive = request.form.get("num_give")
+        new_doc = {
+            "doc_message" : message_receive,
+            "date_app" : date_receive,
+            "timestart_app" : time1_receive,
+            "timeend_app" : time2_receive,
+        }
+
+        db.appointment_patient.update_one(
+            {"num" : int(num_receive)},
+            {"$set" : new_doc},
+        )
+        return jsonify({
+            "result" : "success",
+            "msg" : "Appointment Accepted"
         })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))

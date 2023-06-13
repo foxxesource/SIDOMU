@@ -45,17 +45,18 @@
                     if (response["result"] === "success") {
                         let apps = response["apps"];
                         for (let i = 0; i<apps.length; i++){
-                            let fname = apps[i]["appointment_firstName"];
-                            let lname = apps[i]["appointment_lastName"];
-                            let phone = apps[i]["appointment_phoneNumber"];
-                            let doctor = apps[i]["appointment_doctor"];
-                            let email = apps[i]["appointment_email"];
-                            let message = apps[i]["appointment_message"];
-                            let status = apps[i]["appointment_status"];
-                            let doc_message = apps[i]["appointment_docmessage"];
-                            let date = apps[i]["appointment_date"];
-                            let time1 = apps[i]["appointment_timeStart"];
-                            let time2 = apps[i]["appointment_timeEnd"];
+                            let num = apps[i]["num"];
+                            let fname = apps[i]["first_name"];
+                            let lname = apps[i]["last_name"];
+                            let phone = apps[i]["mobile_number"];
+                            let doctor = apps[i]["doctor"];
+                            let email = apps[i]["email"];
+                            let message = apps[i]["message"];
+                            let status = apps[i]["status"];
+                            let doc_message = apps[i]["doc_message"];
+                            let date = apps[i]["date_app"];
+                            let time1 = apps[i]["timestart_app"];
+                            let time2 = apps[i]["timeend_app"];
                             let fname_patient = apps[i]["patient_firstName"];
                             let lname_patient = apps[i]["patient_lastName"];
                             let country_patient = apps[i]["patient_country"];
@@ -96,7 +97,7 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <div class="input-group">
-                                                    <textarea class="form-control"
+                                                    <textarea id ="input-message" class="form-control"
                                                         aria-label="With textarea" placeholder="Type your message here!"></textarea>                                                    
                                                 </div>
                                                 <div class="modal-body">
@@ -104,13 +105,13 @@
                                                     <div class="container">
                                                         <div class="row g-3">
                                                             <div align="center" class="col-12">
-                                                                <input type="date" name="date">
+                                                                <input type="date" name="date" id="input-date">
                                                             </div>
                                                             <div class="col-6">
-                                                               <h6>Start</h6><input type="time" class="form-control"/>
+                                                               <h6>Start</h6><input type="time" class="form-control" id="input-time1"/>
                                                             </div>
                                                             <div class="col-6">
-                                                               <h6>End</h6><input type="time" class="form-control"/>
+                                                               <h6>End</h6><input type="time" class="form-control" id="input-time2"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,8 +119,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="/login"><button type="button"
-                                                    class="btn btn-primary"><i></i>Confirm</button></a>
+                                            <button type="button"
+                                                    class="btn btn-primary" onclick="acc_app(${num})">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -210,8 +211,27 @@
             })
         }
 
-        function acc_app(){
-
+        function acc_app(num){
+            let message = $("#input-message").val();
+            let date = $("#input-date").val();
+            let time1 = $("#input-time1").val();
+            let time2 = $("#input-time2").val();
+            $.ajax({
+                type : "POST",
+                url : "/update_appointment",
+                data : {message_give : message, 
+                        num_give : num,
+                        date_give : date,
+                        time1_give : time1,
+                        time2_give : time2,
+                    },
+                success : function (response) {
+                    if (response["result"] === "success") {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                }
+            })
         }
 
         function cancel_app(){
