@@ -222,6 +222,7 @@ def appointment_save():
     mobilenumber_receive = request.form.get("mobilenumber_give")
     doctor_receive = request.form.get("doctor_give")
     email_receive = request.form.get("email_give")
+    docemail_receive = request.form.get("doctorval_give")
     message_receive = request.form.get("message_give")
     count = db.appointment_patient.count_documents({})
     num = count + 1
@@ -233,9 +234,13 @@ def appointment_save():
         "mobile_number" : mobilenumber_receive,
         "doctor" : doctor_receive,
         "email" : email_receive,
+        "doc_email" : docemail_receive,
         "message" : message_receive,
         "status" : 0,
-        "doc_message" : ""
+        "doc_message" : "",
+        "date_app" : "",
+        "timestart_app" : "",
+        "timeend_app" : "",
     }
     db.appointment_patient.insert_one(doc)
     return jsonify({"result" : "success"})
@@ -579,7 +584,64 @@ def home_doctor():
 #list schedule for doctor
 @app.route("/appointment-patient")
 def appointment_patient():
-    return render_template("doctor/appointment-patient.html")
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        return render_template("doctor/appointment-patient.html", user_info = user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login_doctor",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login_doctor",msg=msg))
+
+#get appointment from patient to doctor
+@app.route("/get_app_patient", methods=["GET"])
+def get_app_patient():
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        email_receive = request.args.get("email_give")    
+        apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}))
+        for app in apps:
+            data2 = db.appointment_patient.find_one({"doc_email" : app["doc_email"]})
+            app["appointment_num"] = data2["num"]
+            app["appointment_firstName"] = data2["first_name"]
+            app["appointment_lastName"] = data2["last_name"]
+            app["appointment_phoneNumber"] = data2["mobile_number"]
+            app["appointment_doctor"] = data2["doctor"]
+            app["appointment_email"] = data2["email"]
+            app["appointment_message"] = data2["message"]
+            app["appointment_status"] = data2["status"]
+            app["appointment_docmessage"] = data2["doc_message"]
+            app["appointment_date"] = data2["date_app"]
+            app["appointment_timeStart"] = data2["timestart_app"]
+            app["appointment_timeEnd"] = data2["timeend_app"]
+        
+        for app2 in apps:
+            data3 = db.user_patient.find_one({"first_name" : data2["first_name"]})
+            app2["patient_firstName"] = data3["first_name"]
+            app2["patient_lastName"] = data3["last_name"]
+            app2["patient_country"] = data3["country"]
+            app2["patient_stateRegion"] = data3["state_region"]
+            app2["patient_pfp"] = data3["profile_pic_real"]
+
+        return jsonify({
+            "result" : "success",
+            "msg" : "successfully fetched all appointments",
+            "apps" : apps,
+        })
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 #User info for doctor
 @app.route("/info-doctor")

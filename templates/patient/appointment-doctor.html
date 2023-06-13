@@ -40,13 +40,15 @@
                         let apps = response["apps"];
                         // let appoint = response["appoint"];
                         for (let i = 0; i<apps.length; i++){
-                            let app = apps[i];
                             let fname = apps[i]["first_name"];
                             let lname = apps[i]["last_name"];
                             let mobilenumber = apps[i]["mobile_number"];
                             let doctor = apps[i]["doctor"];
                             let email = apps[i]["email"];
                             let message = apps[i]["message"];
+                            let date = apps[i]["date_app"];
+                            let time_start = apps[i]["timestart_app"];
+                            let time_end = apps[i]["timeend_app"]
                             let status = apps[i]["status"];
                             let docmessage = apps[i]["doc_message"]
                             let docfname = apps[i]["doctor_firstName"]
@@ -96,7 +98,7 @@
                             <p class="text-muted fw-light mb-2">Email : ${email}</p>
                             <p class="text-muted fw-light mb-3">Message : ${message}</p>                            
                             <h6 class="fw-bold mb-1">Status : Accepted ✔️<i class="small text-primary"></i></h6>
-                            <p class="text-muted fw-light mb-2">(message : ${docmessage})</p>                           
+                            <p class="text-muted fw-light mb-2">(Message : ${docmessage}, Date : <h6>${date}</h6>, Time: <h6>${time_start} - ${time_end}</h6>)</p>                           
                         </div>
                     </div>
                 </div>`;
