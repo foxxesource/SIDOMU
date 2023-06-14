@@ -19,7 +19,57 @@
     <style>
     </style>
     <script>
+        $(document).ready(function () {
+            get_doct();
+        })
 
+        function get_doct() {
+            $("#doct-box").empty();
+            $.ajax({
+                type: "GET",
+                url: "/get_doctor",
+                data: {},
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        let doct = response["doc_info"];
+                        for (let i = 0; i < doct.length; i++) {
+                            let fname = doct[i]["first_name"]
+                            let lname = doct[i]["last_name"]
+                            let specialist = doct[i]["specialist"]
+                            let docpfp = doct[i]["profile_pic_real"]
+                            let detail = doct[i]["additional_details"]
+                            let id = doct[i]["id"]
+                            let html_temp = `<div class="col-lg-4">
+                    <div class="position-relative mb-5">
+                        <div class="bg-white shadow-sm p-4 rounded-3">
+                            <div class="image d-flex mb-3 align-items-center">
+                                <img class="rounded-circle" style="width:64px; height:64px;" src="/static/${docpfp}" alt="...">
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-1">Dr. ${fname} ${lname}</h5>
+                                    <p class="fw-light mb-0 text-muted small">${specialist}</p>
+                                </div>
+                            </div>
+                            <div class="limitpar">
+                                <p class="text-muted fw-light mb-4">${detail}</p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
+                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
+                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
+                                </div>
+                                <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-primary stretched-link">Get
+                                    Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                            $("#doct-box").append(html_temp)
+                        }
+                    }
+                }
+            })
+        }
     </script>
 </head>
 
@@ -90,226 +140,7 @@
     </header>
     <section class="py-5">
         <div class="container px-5 mt-5">
-            <div class="row gx-5">
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d2.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Rizki Kandias</h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d1.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Raihan Putri</h5>
-                                    <p class="fw-light mb-0 text-muted small">Dental Surgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d2.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Rizki Kandias</h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d1.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Raihan Putri</h5>
-                                    <p class="fw-light mb-0 text-muted small">Dental Surgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d3.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Bintang Duinata <i
-                                            class="bi bi-patch-check-fill small text-primary"></i></h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d2.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Rizki Kandias</h5>
-                                    <p class="fw-light mb-0 text-muted small">Neurosurgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="position-relative mb-5">
-                        <div class="bg-white shadow-sm p-4 rounded-3">
-                            <div class="d-flex mb-3 align-items-center">
-                                <img class="img-fluid rounded-circle" src="static/img/d1.png" alt="...">
-                                <div class="ms-3">
-                                    <h5 class="fw-bold mb-1">Raihan Putri</h5>
-                                    <p class="fw-light mb-0 text-muted small">Dental Surgeon</p>
-                                </div>
-                            </div>
-                            <p class="text-muted fw-light mb-4">The sunrise and sunset gorges. Horses and local natural
-                                products. We are happy family. We look forward to host you.</p>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div>
-                                    <a href="#" class="text-primary"><span class="bi bi-facebook"></span></a>
-                                    <a href="#" class="text-primary mx-3"><span class="bi bi-google"></span></a>
-                                    <a href="#" class="text-primary"><span class="bi bi-twitter"></span></a>
-                                </div>
-                                <a href="/doctor-item" class="btn btn-outline-primary stretched-link">Get
-                                    Appointment</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row gx-5" id="doct-box">
             </div>
         </div>
     </section>
