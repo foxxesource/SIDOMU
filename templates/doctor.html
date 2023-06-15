@@ -27,7 +27,7 @@
             $("#doct-box").empty();
             $.ajax({
                 type: "GET",
-                url: "/get_doctor",
+                url: "/get_doc",
                 data: {},
                 success: function (response) {
                     if (response["result"] === "success") {

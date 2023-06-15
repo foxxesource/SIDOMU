@@ -168,6 +168,13 @@ def about():
 def doctor():
     return render_template("doctor.html")
 
+@app.route("/get_doc", methods=["GET"])
+def get_doc():
+    doc_info = list(db.user_doctor.find({}, {"_id" : False}))
+    return jsonify({"result" : "success",
+            "msg" : "successfully fetched all doctors",
+            "doc_info" : doc_info,})
+
 @app.route("/doctor-item")
 def doctor_item():
     return render_template("doctors-item.html")
