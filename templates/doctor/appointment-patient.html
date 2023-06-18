@@ -38,13 +38,13 @@
             }
             $("#app-box").empty();
             $.ajax({
-                type : "GET",
-                url : `get_app_patient?email_give=${email}`,
-                data : {},
-                success : function(response){
+                type: "GET",
+                url: `get_app_patient?email_give=${email}`,
+                data: {},
+                success: function (response) {
                     if (response["result"] === "success") {
                         let apps = response["apps"];
-                        for (let i = 0; i<apps.length; i++){
+                        for (let i = 0; i < apps.length; i++) {
                             let num = apps[i]["num"];
                             let fname = apps[i]["first_name"];
                             let lname = apps[i]["last_name"];
@@ -63,7 +63,7 @@
                             let stateRegion_patient = apps[i]["patient_stateRegion"];
                             let pfp = apps[i]["patient_pfp"];
                             let html_temp = "";
-                            if (status == 0){
+                            if (status == 0) {
                                 html_temp = `<div class="col-lg-4">
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                 </div>`;
-                            } else if(status == 1){
+                            } else if (status == 1) {
                                 html_temp = `<div class="col-lg-4">
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
@@ -181,7 +181,7 @@
                         </div>
                     </div>
                 </div>`;
-                            }else{
+                            } else {
                                 html_temp = `<div class="col-lg-4">
                     <div class="position-relative mb-5">
                         <div class="bg-white shadow-sm p-4 rounded-3">
@@ -211,21 +211,22 @@
             })
         }
 
-        function acc_app(num){
+        function acc_app(num) {
             let message = $("#input-message").val();
             let date = $("#input-date").val();
             let time1 = $("#input-time1").val();
             let time2 = $("#input-time2").val();
             $.ajax({
-                type : "POST",
-                url : "/update_appointment",
-                data : {message_give : message, 
-                        num_give : num,
-                        date_give : date,
-                        time1_give : time1,
-                        time2_give : time2,
-                    },
-                success : function (response) {
+                type: "POST",
+                url: "/update_appointment",
+                data: {
+                    message_give: message,
+                    num_give: num,
+                    date_give: date,
+                    time1_give: time1,
+                    time2_give: time2,
+                },
+                success: function (response) {
                     if (response["result"] === "success") {
                         alert(response["msg"]);
                         window.location.reload();
@@ -234,16 +235,17 @@
             })
         }
 
-        function cancel_app(num){
+        function cancel_app(num) {
             let message = $("#input-cancel-message").val();
             $.ajax({
-                type : "POST",
-                url : "/cancel_appointment",
-                data : {num_give : num,
-                        message_give : message,
+                type: "POST",
+                url: "/cancel_appointment",
+                data: {
+                    num_give: num,
+                    message_give: message,
                 },
-                success : function (response) {
-                    if (response["result"] === "success"){
+                success: function (response) {
+                    if (response["result"] === "success") {
                         alert(response["msg"]);
                         window.location.reload();
                     }
@@ -259,7 +261,7 @@
     <header class="p-3" style="background-color: #0d47a1;">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <a href="/home-doctor" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
                         <image width="35" xlink:href="static/img/logo.png"></image>
                     </svg>
@@ -268,7 +270,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
                     <li><a href="/home-doctor" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">My Schedule</a></li>
+                    <li><a href="/appointment-patient" class="nav-link px-2 text-white">My Schedule</a></li>
                     <li><a href="/info-doctor" class="nav-link px-2 text-white">User Settings</a></li>
                 </ul>
 
@@ -279,7 +281,11 @@
                         Dr. {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
                 </div>
+                <a href="/chat_doc" class="btn bg-transparent me-2">
+                    <i class="bi bi-chat-dots-fill text-white"></i> <span class="text-white">Chat Patient</span>
+                </a>
             </div>
+        </div>
         </div>
     </header>
     <header class="py-5 inner-header" style="background-color: #0d47a1;">

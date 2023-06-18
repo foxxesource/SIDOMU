@@ -139,7 +139,7 @@
     <header class="p-3" style="background-color: #0d47a1;">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <a href="/home-patient" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="35" role="img" aria-label="logo">
                         <image width="35" xlink:href="static/img/logo.png"></image>
                     </svg>
@@ -149,18 +149,24 @@
                     <li><a class="nav-link fw-bold text-warning px-1">SIDOMU</a></li>
                     <li><a href="/home-patient" class="nav-link px-2 text-white">Home</a></li>
                     <li><a href="/appointment" class="nav-link px-2 text-white">Appointment</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">My List</a></li>
+                    <li><a href="/appointment-doctor" class="nav-link px-2 text-white">My List</a></li>
                     <li><a href="/doctor-homepatient" class="nav-link px-2 text-white">Doctors</a></li>
                     <li><a href="/blog-homepatient" class="nav-link px-2 text-white">Blog</a></li>
-                    <li><a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">User Settings</a></li>
+                    <li><a href="/info-patient/{{ user_info.email }}" class="nav-link px-2 text-white">User Settings</a>
+                    </li>
                 </ul>
 
-                <div class="text-end">
+                <div class="text-end" id="user-box">
                     <a href="/info-patient/{{ user_info.email }}" class="image nav-link px-2 text-white">
                         <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}" alt="profilepic"
                             style="width:32px; height:32px;" class="rounded-circle">
                         {{ user_info.first_name }} {{ user_info.last_name }}
                     </a>
+                </div>
+
+                <a href="/chat" class="btn bg-transparent me-2">
+                    <i class="bi bi-chat-dots-fill text-white"></i> <span class="text-white">Chat Doctors</span>
+                </a>
                 </div>
             </div>
         </div>

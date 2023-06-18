@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, session, jsonify
 from pymongo import MongoClient
 import jwt
 import certifi
@@ -27,6 +27,7 @@ db = client[DB_NAME]
 SECRET_KEY = "BINTANGSAH123"
 
 TOKEN_KEY = "mytoken"
+app.secret_key = 'your_secret_key'
 
 TOKEN_KEY2 = "mytoken2"
 
@@ -64,11 +65,15 @@ def sign_in():
         }
     )
     if result:
+        session['email_patient'] = email_receive
+
+    if result:
         payload = {
             "id": email_receive,
             # the token will be valid for 24 hours
             "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
         }
+        
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
         return jsonify(
@@ -136,6 +141,9 @@ def sign_in_doctor():
             "password": password_receive,
         }
     )
+    if result:
+        session['email_doctor'] = email_receive
+    
     if result:
         payload = {
             "id": email_receive,
@@ -789,6 +797,144 @@ def update_docprofile():
         })
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
+
+@app.route('/chat')
+def chat():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        email = session['email_patient']
+        users = db.user_doctor.find({'email': {'$ne': email}})
+        return render_template('patient/chat.html', email=email, users=users, user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login",msg=msg))
+    
+@app.route('/chat_doc')
+def chat_doc():
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        email = session['email_doctor']
+        users = db.user_patient.find({'email': {'$ne': email}})
+        return render_template('doctor/chat_doc.html', email=email, users=users, user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login",msg=msg))
+   
+    
+@app.route('/chat/<friend>')
+def private_chat(friend):
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_patient.find_one({"email" : payload.get("id")})
+        email = session['email_patient']
+        friend = db.user_doctor.find_one({'email': friend})
+        messages = db.messages.find({
+        '$or': [
+            {'sender': email, 'receiver': friend['email']},
+            {'sender': friend['email'], 'receiver': email}
+        ]
+        }).sort('timestamp', 1)
+        return render_template("patient/private_chat.html", user_info = user_info,
+                               email=email, 
+                               friend=friend, 
+                               messages=messages)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login",msg=msg))
+
+@app.route('/chat_doc/<friend>')
+def private_chat_doc(friend):
+    token_receive = request.cookies.get(TOKEN_KEY2)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=["HS256"]
+        )
+        user_info = db.user_doctor.find_one({"email" : payload.get("id")})
+        email = session['email_doctor']
+        friend = db.user_patient.find_one({'email': friend})
+        messages = db.messages.find({
+        '$or': [
+            {'sender': email, 'receiver': friend['email']},
+            {'sender': friend['email'], 'receiver': email}
+        ]
+        }).sort('timestamp', 1)
+        return render_template("doctor/private_chat_doc.html", user_info = user_info,
+                               email=email, 
+                               friend=friend, 
+                               messages=messages)
+    except jwt.ExpiredSignatureError:
+        msg = "Your token has expired"
+        return redirect(url_for("login",msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = "There was a problem logging your in"
+        return redirect(url_for("login",msg=msg))
+    
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    email = session['email_patient']
+    receiver = request.form.get('receiver')
+    message = request.form.get('message')
+    message_data = {
+        'sender': email,
+        'receiver': receiver,
+        'message': message
+    }
+    db.messages.insert_one(message_data)
+    return redirect('/chat/{}'.format(receiver))
+
+@app.route('/send_message_doc', methods=['POST'])
+def send_message_doc():
+    email2 = session['email_doctor']
+    receiver2 = request.form.get('receiver')
+    message2 = request.form.get('message')
+    message_data2 = {
+        'sender': email2,
+        'receiver': receiver2,
+        'message': message2
+    }
+    db.messages.insert_one(message_data2)
+    return redirect('/chat_doc/{}'.format(receiver2))
+
+@app.route("/chat_doc/message_del", methods=['POST'])
+def message_del():
+    friend_del = request.form["friend_receive"]
+    email = session["email_doctor"]
+    friend = db.user_patient.find_one({'email': friend_del})
+    db.messages.delete_many({
+        '$or': [
+            {'sender': email, 'receiver': friend['email']},
+            {'sender': friend['email'], 'receiver': email}
+        ]
+    })
+    return jsonify({'msg': 'Session Ended!'})
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

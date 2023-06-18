@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Private Chat with {{ friend.legit_doctorname }}</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+      <style>
+           body {
+            background: #0d47a1;
+        }
+        .chat-container {
+          max-width: 900px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+    
+        .chat-box {
+          height: 400px;
+          overflow-y: scroll;
+          border: 1px solid #ccc;
+          padding: 10px;
+        }
+    
+        .chat-message {
+          margin-bottom: 10px;
+        }
+    
+        .chat-message .sender {
+          font-weight: bold;
+        }
+        
+      </style>
+    </head>
+    <body>
+        
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="chat-container">
+              <h1 class="text-center text-white"> Chat with <span class="text-warning"><h3>{{ friend.legit_doctorname }}</h3></span></h1>
+              <div class="position-relative mb-5">
+                <div class="bg-white shadow-sm p-4 rounded-300">
+                    <div class="image  mb-100 align-items-center">
+              <div class="chat-box"
+
+               id="messages">
+                {% for message in messages %}
+                    {% if message.sender == email %}
+                        <p><strong>{{ user_info.first_name }} {{user_info.last_name}}:</strong> {{ message.message }}</p>
+                    {% else %}
+                        <p><strong class="text-warning">{{ friend.legit_doctorname }}:</strong> {{ message.message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            <form id="message-form" method="POST" action="/send_message">
+                <input type="hidden" name="receiver" value="{{ friend.email }}">
+            <div class="form-group">
+                <textarea id="message" name="message" class="form-control mt-2" placeholder="Type your message"></textarea>
+            </div>
+            <div class="form-group text-center">
+                <a href="/chat" class="btn btn-primary me-2">Back</a>
+                <button class="btn btn-primary me-2" type="submit"><b>Send</b></button>
+                
+            </div>
+            
+            </form>
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+    <script>
+        // Auto-scroll to the bottom of the chat messages
+        var messagesDiv = document.getElementById("messages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        // Submit the message form when the Enter key is pressed
+        var messageForm = document.getElementById("message-form");
+        var messageInput = document.querySelector("input[name='message']");
+        messageInput.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) {
+                messageForm.submit();
+            }
+        });
+    </script>
+</body>
+</html>
+
