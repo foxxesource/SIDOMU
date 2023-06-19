@@ -32,6 +32,26 @@
             get_app("{{ user_info.email }}");
         })
 
+        function time2str(date) {
+            let today = new Date();
+            let time = (today - date) / 1000 / 60;
+            if (time < 60) {
+                return parseInt(time) + "minutes ago";
+            }
+            time = time / 60;
+            if (time < 24) {
+                return parseInt(time) + "hours ago";
+            }
+            time = time / 24;
+            if (time < 7) {
+                return parseInt(time) + "days ago";
+            }
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+            return `${year}.${month}.${day}`;
+        }
+
         function get_app(email) {
             if (email === undefined) {
                 email = ""
@@ -62,6 +82,8 @@
                             let country_patient = apps[i]["patient_country"];
                             let stateRegion_patient = apps[i]["patient_stateRegion"];
                             let pfp = apps[i]["patient_pfp"];
+                            let date_app = new Date(apps[i]["date"]);
+                            let time_post = time2str(date_app)
                             let html_temp = "";
                             if (status == 0) {
                                 html_temp = `<div class="col-lg-4">
@@ -74,7 +96,7 @@
                                     <p class="fw-light mb-0 text-muted small">${stateRegion_patient}, ${country_patient}</p>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <h6 class="fw-bold mb-1">Form Detail <i class="small text-primary"></i><i class="fw-light text-muted small"> -${time_post}-</i></h6>
                             <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
                             <p class="text-muted fw-light mb-2">Phone Number : ${phone}</p>
                             <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>

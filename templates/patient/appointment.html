@@ -27,6 +27,7 @@
             var doctorValue = $("#input-doctor").val();
             let email = $("#input-email").val();
             let message = $("#input-message").val();
+            let today = new Date().toISOString();
             if (fname === "") {
                 $("#help-fname").text("Please input your first name.");
                 $("#input-fname").focus();
@@ -72,7 +73,8 @@
                     doctor_give: doctorText,
                     doctorval_give : doctorValue,
                     email_give: email,
-                    message_give: message
+                    message_give: message,
+                    date_give : today
                 },
                 success: function (response) {
                     alert("Your appointment is registered!");

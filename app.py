@@ -8,6 +8,7 @@ import os
 from os.path import join, dirname
 from datetime import datetime, timedelta
 import hashlib
+from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -239,6 +240,7 @@ def appointment_save():
     email_receive = request.form.get("email_give")
     docemail_receive = request.form.get("doctorval_give")
     message_receive = request.form.get("message_give")
+    date_receive = request.form.get("date_give")
     count = db.appointment_patient.count_documents({})
     num = count + 1
     # exists = bool(db.user_patient.find_one({"email" : email_receive}))
@@ -256,6 +258,7 @@ def appointment_save():
         "date_app" : "",
         "timestart_app" : "",
         "timeend_app" : "",
+        "date" : date_receive
     }
     db.appointment_patient.insert_one(doc)
     return jsonify({"result" : "success"})
@@ -387,7 +390,7 @@ def get_app():
             algorithms=["HS256"]
         )
         email_receive = request.args.get("email_give")    
-        apps = list(db.appointment_patient.find({"email" : email_receive}, {"_id" : False}))
+        apps = list(db.appointment_patient.find({"email" : email_receive}, {"_id" : False}).sort("date", -1).limit(9))
         for app in apps:
             data2 = db.user_doctor.find_one({"legit_doctorname" : app["doctor"]})
             app["doctor_firstName"] = data2["first_name"]
@@ -626,7 +629,7 @@ def get_app_patient():
             algorithms=["HS256"]
         )
         email_receive = request.args.get("email_give")    
-        apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}))
+        apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}).sort("date", -1).limit(20))
         
         for app in apps:
             data2 = db.user_patient.find_one({"email" : app["email"]})
