@@ -641,6 +641,7 @@ def get_app_patient():
             app["patient_country"] = data2["country"]
             app["patient_stateRegion"] = data2["state_region"]
             app["patient_pfp"] = data2["profile_pic_real"]
+        
 
         return jsonify({
             "result" : "success",
@@ -695,14 +696,14 @@ def cancel_appointment():
             algorithms=["HS256"]
         )
         message_receive = request.form.get("message_give")
-        num_receive = request.form.get("num_give")
+        id_receive = request.form.get("id_give")
         new_doc = {
             "doc_message" : message_receive,
             "status" : 3
         }
 
         db.appointment_patient.update_one(
-            {"num" : int(num_receive)},
+            {"_id" : ObjectId(id_receive)},
             {"$set" : new_doc}
         )
         return jsonify({

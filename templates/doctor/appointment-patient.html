@@ -52,6 +52,14 @@
             return `${year}.${month}.${day}`;
         }
 
+        function changeId(id){
+            $('#btnAcc').attr('onclick', 'acc_app("'+id+'")');
+        }
+
+        function changeId2(id){
+            $('#btnDec').attr('onclick', 'cancel_app("'+id+'")');
+        }
+
         function get_app(email) {
             if (email === undefined) {
                 email = ""
@@ -65,7 +73,7 @@
                     if (response["result"] === "success") {
                         let apps = response["apps"];
                         for (let i = 0; i < apps.length; i++) {
-                            let num = apps[i]["num"];
+                            let id = apps[i]["_id"];
                             let fname = apps[i]["first_name"];
                             let lname = apps[i]["last_name"];
                             let phone = apps[i]["mobile_number"];
@@ -104,7 +112,7 @@
                             <p class="text-muted fw-light mb-3">Message : ${message}</p>
                             <!-- button accept modal -->
                             <a class="btn btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#acceptModal">Accept</a>
+                                data-bs-target="#acceptModal" onclick="changeId('${id}')">Accept</a>
                             <!-- accept modal -->
                             <div class="modal fade" id="acceptModal" data-bs-backdrop="static" data-bs-keyboard="false"
                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -141,15 +149,15 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button"
-                                                    class="btn btn-primary" onclick="acc_app(${apps["_id"]})">Confirm</button>
+                                            <button id="btnAcc" type="button"
+                                                    class="btn btn-primary" onclick="acc_app('${id}')">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- modal button decline -->
                             <a href="/doctor-item" class="btn btn-outline-danger" data-bs-toggle="modal"
-                                data-bs-target="#declineModal">Decline</a>
+                                data-bs-target="#declineModal" onclick="changeId2('${id}')">Decline</a>
                             <!-- modal decline -->
                             <div class="modal fade" id="declineModal" data-bs-backdrop="static" data-bs-keyboard="false"
                                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -170,7 +178,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button onclick ="cancel_app(${num})" type="button"
+                                            <button id="btnDec" onclick ="cancel_app('${id}')" type="button"
                                                     class="btn btn-primary">Confirm</button>
                                         </div>
                                     </div>
@@ -257,13 +265,13 @@
             })
         }
 
-        function cancel_app(num) {
+        function cancel_app(id) {
             let message = $("#input-cancel-message").val();
             $.ajax({
                 type: "POST",
                 url: "/cancel_appointment",
                 data: {
-                    num_give: num,
+                    id_give: id,
                     message_give: message,
                 },
                 success: function (response) {
