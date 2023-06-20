@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button"
-                                                    class="btn btn-primary" onclick="acc_app(${num})">Confirm</button>
+                                                    class="btn btn-primary" onclick="acc_app(${apps["_id"]})">Confirm</button>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@
                                     <p class="fw-light mb-0 text-muted small">${stateRegion_patient}, ${country_patient}</p>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <h6 class="fw-bold mb-1">Form Detail <i class="small text-primary"></i><i class="fw-light text-muted small"> -${time_post}-</i></h6>
                             <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
                             <p class="text-muted fw-light mb-2">Phone Number : ${phone}</p>
                             <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>
@@ -214,7 +214,7 @@
                                     <p class="fw-light mb-0 text-muted small">${stateRegion_patient}, ${country_patient}</p>
                                 </div>
                             </div>
-                            <h6 class="fw-bold mb-1">Form Detail<i class="small text-primary"></i></h6>
+                            <h6 class="fw-bold mb-1">Form Detail <i class="small text-primary"></i><i class="fw-light text-muted small"> -${time_post}-</i></h6>
                             <p class="text-muted fw-light mb-2">Name : ${fname} ${lname}</p>
                             <p class="text-muted fw-light mb-2">Phone Number : ${phone}</p>
                             <p class="text-muted fw-light mb-2">Doctor : ${doctor}</p>
@@ -233,7 +233,7 @@
             })
         }
 
-        function acc_app(num) {
+        function acc_app(id) {
             let message = $("#input-message").val();
             let date = $("#input-date").val();
             let time1 = $("#input-time1").val();
@@ -243,7 +243,7 @@
                 url: "/update_appointment",
                 data: {
                     message_give: message,
-                    num_give: num,
+                    id_give: id,
                     date_give: date,
                     time1_give: time1,
                     time2_give: time2,

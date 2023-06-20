@@ -9,6 +9,8 @@ from os.path import join, dirname
 from datetime import datetime, timedelta
 import hashlib
 from datetime import datetime, timedelta
+import json
+from bson.objectid import ObjectId
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -629,9 +631,10 @@ def get_app_patient():
             algorithms=["HS256"]
         )
         email_receive = request.args.get("email_give")    
-        apps = list(db.appointment_patient.find({"doc_email" : email_receive}, {"_id" : False}).sort("date", -1).limit(20))
+        apps = list(db.appointment_patient.find({"doc_email" : email_receive}).sort("date", -1).limit(20))
         
         for app in apps:
+            app["_id"] = str(app["_id"])
             data2 = db.user_patient.find_one({"email" : app["email"]})
             app["patient_firstName"] = data2["first_name"]
             app["patient_lastName"] = data2["last_name"]
@@ -661,7 +664,7 @@ def update_appointment():
         date_receive = request.form.get("date_give")
         time1_receive = request.form.get("time1_give")
         time2_receive = request.form.get("time2_give")
-        num_receive = request.form.get("num_give")
+        id_receive = request.form.get("id_give")
         new_doc = {
             "doc_message" : message_receive,
             "date_app" : date_receive,
@@ -671,7 +674,7 @@ def update_appointment():
         }
 
         db.appointment_patient.update_one(
-            {"num" : int(num_receive)},
+            {"_id" : ObjectId(id_receive)},
             {"$set" : new_doc}
         )
         return jsonify({
